@@ -22,24 +22,63 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { StorageService } from './Services/StorageService';
+import { useEffect, useState } from 'react';
+import { LoginMetadata } from './Models/LoginMetadata';
+import Loading from './components/Loading';
+import Login from './pages/Login';
 
 setupIonicReact();
 
 const App: React.FC = () => {
+  const [loginMetadata, setLoginMetadata] = useState(new LoginMetadata("-1"));
+  const [showLoading, setShowLoading] = useState(false);
+  let setLoginData = (resp: any) => {
+    setLoginMetadata(resp);
+    StorageService.Set("LoginMetadataKey", resp);
+  };
+  useEffect(() => {
+    setShowLoading(true);
+    StorageService.Get("LoginMetadataKey")
+      .then((resp) => {
+        if (resp != null) setLoginMetadata(resp);
+        setShowLoading(false);
+      })
+      .catch(() => {
+        setShowLoading(false);
+      });
+    console.log("hello");
+  }, []);
+  if (showLoading) {
+    return (
+      <IonApp>
+        <Loading />
+      </IonApp>
+    );
+  }
   return (
     <IonApp>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <Menu />
+        {loginMetadata.tokenString != "-1" ? (
+          <IonSplitPane contentId="main" class="backgroundImage">
+            <Menu />
+            <IonRouterOutlet id="main">
+              <Route path="/:name" exact={true}>
+                <Page />
+              </Route>
+              <Route path="/" exact={true}>
+                <Redirect to="/home" />
+              </Route>
+            </IonRouterOutlet>
+          </IonSplitPane>
+        ) : (
           <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <Redirect to="/page/Inbox" />
-            </Route>
-            <Route path="/page/:name" exact={true}>
-              <Page />
+            <Route path="/" exact={false}>
+              <Redirect to="/login" />
+              <Login />
             </Route>
           </IonRouterOutlet>
-        </IonSplitPane>
+        )}
       </IonReactRouter>
     </IonApp>
   );
