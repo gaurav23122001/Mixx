@@ -51,78 +51,89 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   //   console.log(response);
   // };
 
-  return (
-    showRegister ? (<Register loginMetadata={loginMetadata} loginfunction={loginfunction} setShowRegister={setShowRegister} />) : (
-      <div className="container">
-        <div className="box">
-          <div className="left-box">
-            <div className="title">Welcome Note</div>
-            <div className="line"></div>
-            <div className="content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-              laboriosam aperiam ex quos, non repellendus molestias quasi quis
-              sint debitis impedit maiores culpa aliquam minima dolores esse. Vero
-              dicta laborum voluptate nobis quia tempora aperiam id distinctio
-            </div>
-            <div className="image-box">
-              <img src={symbol} alt="" className="img1" />
-              <img src={music} alt="" />
-            </div>
+  return showRegister ? (
+    <Register
+      loginMetadata={loginMetadata}
+      loginfunction={loginfunction}
+      setShowRegister={setShowRegister}
+    />
+  ) : (
+    <div className="container">
+      <div className="box">
+        <div className="left-box">
+          <div className="title">Welcome Note</div>
+          <div className="line"></div>
+          <div className="content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
+            laboriosam aperiam ex quos, non repellendus molestias quasi quis
+            sint debitis impedit maiores culpa aliquam minima dolores esse. Vero
+            dicta laborum voluptate nobis quia tempora aperiam id distinctio
           </div>
-          <div className="right-box">
-            <div className="title ion-text-center">
-              <div >LOG IN</div>
-              <div className="line"></div>
-            </div>
-            <div className="form">
-              <form autoComplete="off">
-                <div className="inputBox">
-                  <input type="email" id="email" name="email" required />
-                  <label htmlFor="email">Email Address</label>
-                </div>
-                <div className="inputBox">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    id="password"
-                    required
-                  />
-                  <label htmlFor="password">Password</label>
-                  <div className="eye-icon" onClick={handlePassword}>
-                    {showPassword ? <FiEyeOff /> : <FiEye />}
-                  </div>
-                </div>
-                <input type="submit" value="LOG IN" />
-              </form>
-            </div>
-            <div className="divider">
-              <div className="left"></div>
-              <div className="content">OR</div>
-              <div className="right"></div>
-            </div>
-            <div className="social-login ion-text-center">
-              <GoogleLogin
-                clientId={clientId}
-                render={(renderProps) => (
-                  <div onClick={renderProps.onClick}>
-                    <AiOutlineGoogle />
-                  </div>
-                )}
-                onSuccess={onGoogleSuccess}
-                onFailure={onGoogleFailure}
-                cookiePolicy={"single_host_origin"}
-                isSignedIn={true}
-              />
-            </div>
-            <div className="footer">
-              <div className="ion-text-center">
-                Dont have an account? <span onClick={() => { setShowRegister(true) }}>SIGN UP</span>{" "}
+          <div className="image-box">
+            <img src={symbol} alt="" className="img1" />
+            <img src={music} alt="" />
+          </div>
+        </div>
+        <div className="right-box">
+          <div className="title ion-text-center">
+            <div>LOG IN</div>
+            <div className="line"></div>
+          </div>
+          <div className="form">
+            <form autoComplete="off">
+              <div className="inputBox">
+                <input type="text" id="email" name="email" required />
+                <label htmlFor="email">Email Address</label>
               </div>
+              <div className="inputBox">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  required
+                />
+                <label htmlFor="password">Password</label>
+                <div className="eye-icon" onClick={handlePassword}>
+                  {showPassword ? <FiEyeOff /> : <FiEye />}
+                </div>
+              </div>
+              <input type="submit" value="LOG IN" />
+            </form>
+          </div>
+          <div className="divider">
+            <div className="left"></div>
+            <div className="content">OR</div>
+            <div className="right"></div>
+          </div>
+          <div className="social-login ion-text-center">
+            <GoogleLogin
+              clientId={clientId}
+              render={(renderProps) => (
+                <div onClick={renderProps.onClick}>
+                  <AiOutlineGoogle />
+                </div>
+              )}
+              onSuccess={onGoogleSuccess}
+              onFailure={onGoogleFailure}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            />
+          </div>
+          <div className="footer">
+            <div className="ion-text-center">
+              Dont have an account?{" "}
+              <span
+                onClick={() => {
+                  setShowRegister(true);
+                }}
+              >
+                SIGN UP
+              </span>{" "}
             </div>
           </div>
         </div>
       </div>
-    )
+    </div>
   );
 };
 

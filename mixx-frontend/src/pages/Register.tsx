@@ -14,7 +14,11 @@ interface RegisterProps {
   loginMetadata: LoginMetadata;
 }
 
-const Register: React.FC<RegisterProps> = ({ loginfunction, setShowRegister, loginMetadata }) => {
+const Register: React.FC<RegisterProps> = ({
+  loginfunction,
+  setShowRegister,
+  loginMetadata,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handlePassword = () => {
@@ -79,7 +83,7 @@ const Register: React.FC<RegisterProps> = ({ loginfunction, setShowRegister, log
                 <label htmlFor="name">Name</label>
               </div>
               <div className="inputBox">
-                <input type="email" id="email" name="email" required />
+                <input type="text" id="email" name="email" required />
                 <label htmlFor="email">Email Address</label>
               </div>
               <div className="inputBox">
@@ -118,7 +122,14 @@ const Register: React.FC<RegisterProps> = ({ loginfunction, setShowRegister, log
           </div>
           <div className="footer">
             <div className="ion-text-center">
-              Allready have an account? <span onClick={() => { setShowRegister(false) }}>LOG IN</span>{" "}
+              Allready have an account?{" "}
+              <span
+                onClick={() => {
+                  setShowRegister(false);
+                }}
+              >
+                LOG IN
+              </span>{" "}
             </div>
           </div>
         </div>
