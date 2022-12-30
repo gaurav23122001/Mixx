@@ -8,12 +8,13 @@ import { LoginMetadata } from "../Models/LoginMetadata";
 import music from "./../Assets/music.png";
 import symbol from "./../Assets/symbol.png";
 
-interface LoginProps {
+interface RegisterProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
+  setShowRegister: (value: boolean) => void;
   loginMetadata: LoginMetadata;
 }
 
-const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
+const Register: React.FC<RegisterProps> = ({ loginfunction, setShowRegister, loginMetadata }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handlePassword = () => {
@@ -67,7 +68,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
           </div>
         </div>
         <div className="right-box">
-          <div className="title">
+          <div className="title ion-text-center">
             <div>SIGN UP</div>
             <div className="line"></div>
           </div>
@@ -101,7 +102,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
             <div className="content">OR</div>
             <div className="right"></div>
           </div>
-          <div className="social-login">
+          <div className="social-login ion-text-center">
             <GoogleLogin
               clientId={clientId}
               render={(renderProps) => (
@@ -116,8 +117,8 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
             />
           </div>
           <div className="footer">
-            <div>
-              Allready have an account? <span>LOG IN</span>{" "}
+            <div className="ion-text-center">
+              Allready have an account? <span onClick={() => { setShowRegister(false) }}>LOG IN</span>{" "}
             </div>
           </div>
         </div>
@@ -126,4 +127,4 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   );
 };
 
-export default Login;
+export default Register;
