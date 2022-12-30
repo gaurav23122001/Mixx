@@ -55,7 +55,7 @@ const Register: React.FC<RegisterProps> = ({
   // };
 
   return (
-    <div className="container">
+    <div className="register container">
       <div className="box">
         <div className="left-box">
           <div className="title">Welcome Note</div>
