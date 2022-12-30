@@ -17,13 +17,13 @@
   justify-content: center;
 }
 
-.box {
+.register .box {
   background-color: rgba(255, 255, 255, 0.2);
   display: flex;
   border-radius: 30px;
 }
 
-.left-box {
+.register .left-box {
   width: 350px;
   background-color: white;
   border-top-left-radius: 30px;
@@ -31,7 +31,7 @@
   text-align: left;
 }
 
-.left-box .title {
+.register .left-box .title {
   color: #0744c6;
   font-weight: bold;
   font-size: 1.3rem;
@@ -39,7 +39,7 @@
   padding-left: 30px;
 }
 
-.left-box .line {
+.register .left-box .line {
   height: 5px;
   width: 85px;
   background-color: #0744c6;
@@ -48,27 +48,27 @@
   margin-bottom: 40px;
 }
 
-.left-box .image-box {
+.register .left-box .image-box {
   margin-top: 70px;
   width: 160px;
   float: right;
   position: relative;
 }
 
-.img1 {
+.register .img1 {
   position: absolute;
   top: -30px;
   left: -10px;
 }
 
-.left-box .content {
+.register .left-box .content {
   color: #a8a8a8;
   padding: 0px 30px;
 }
 
 /* ------------------------------------------------------------------------------- */
 
-.right-box {
+.register .right-box {
   width: 350px;
   /* padding: 50px; */
   padding: 50px 50px 0px 50px;
@@ -76,12 +76,12 @@
   color: #fff;
 }
 
-.right-box .title {
+.register .right-box .title {
   margin: auto;
   color: #fff;
   font-weight: bold;
 }
-.right-box .line {
+.register .right-box .line {
   height: 3px;
   width: 65px;
   background-color: #fff;
@@ -89,15 +89,15 @@
   margin-top: 1px;
 }
 
-.form {
+.register .form {
   padding-top: 10px;
 }
 
-.form .inputBox {
+.register .form .inputBox {
   position: relative;
 }
 
-.form .inputBox input {
+.register .form .inputBox input {
   width: 100%;
   padding: 10px;
   padding-left: 0px;
@@ -110,7 +110,7 @@
   outline: none;
 }
 
-.form .inputBox label {
+.register .form .inputBox label {
   position: absolute;
   top: 0;
   left: 0;
@@ -121,22 +121,22 @@
   transition: 0.5s;
 }
 
-.eye-icon {
+.register .eye-icon {
   position: absolute;
   top: 20px;
   right: 0;
   color: #fff;
 }
 
-.form .inputBox input:focus ~ label,
-.form .inputBox input:valid ~ label {
+.register .form .inputBox input:focus ~ label,
+.register .form .inputBox input:valid ~ label {
   top: -20px;
   left: 0;
   color: #fff;
   font-size: 10px;
 }
 
-.form input[type="submit"] {
+.register .form input[type="submit"] {
   background: #fff;
   color: #0744c6;
   border: none;
@@ -149,31 +149,31 @@
   font-weight: bold;
 }
 
-.divider {
+.register .divider {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.divider .left {
+.register .divider .left {
   height: 1px;
   width: 100px;
   background-color: #e7e7e7;
 }
-.divider .right {
+.register .divider .right {
   height: 1px;
   width: 100px;
   background-color: #e7e7e7;
 }
 
-.divider .content {
+.register .divider .content {
   font-size: 10px;
   color: #e7e7e7;
 }
 
 /* --------------------------------------------------------------------------- */
-.social-login {
+.register .social-login {
   width: 55px;
   background-color: rgb(217, 217, 217, 0.2);
   margin: auto;
@@ -182,19 +182,19 @@
   border-radius: 20px;
 }
 
-.social-login div {
+.register .social-login div {
   color: #fff;
   margin: auto;
   cursor: pointer;
 }
 
-.footer {
+.register .footer {
   margin-top: 10px;
   color: #a8a8a8;
   font-size: 0.75rem;
   margin-bottom: 10px;
 }
-.footer span {
+.register .footer span {
   color: #fff;
   font-weight: bold;
   cursor: pointer;
