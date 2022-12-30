@@ -11,8 +11,15 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
+import { Redirect } from "react-router";
+
 import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import './Menu.css';
+import { GoogleLogout } from 'react-google-login';
+import { gapi } from 'gapi-script';
+import { LoginMetadata } from "../Models/LoginMetadata";
+import { StorageService } from '../Services/StorageService';
+import Login from '../pages/Login';
 
 interface AppPage {
   url: string;
@@ -59,10 +66,20 @@ const appPages: AppPage[] = [
     mdIcon: warningSharp
   }
 ];
-
-const Menu: React.FC = () => {
+interface MenuProps {
+  loginfunction: (loginMetadata: LoginMetadata | null) => void;
+  loginMetadata: LoginMetadata
+}
+const Menu: React.FC<MenuProps> = ({
+  loginMetadata,
+  loginfunction
+}) => {
   const location = useLocation();
-
+  const clientId = '413463613463-mgrsltc9uf95ieghf1iqk0k7bgps5ul9.apps.googleusercontent.com';
+  const logOut = () => {
+    StorageService.Logout();
+    loginfunction(new LoginMetadata("-1"));
+  };
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
@@ -79,6 +96,7 @@ const Menu: React.FC = () => {
               </IonMenuToggle>
             );
           })}
+          <GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />
         </IonList>
       </IonContent>
     </IonMenu>
