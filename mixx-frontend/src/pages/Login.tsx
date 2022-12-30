@@ -47,6 +47,7 @@ const Login: React.FC = () => {
                 </div>
               </div>
               <input type="submit" value="LOG IN" />
+              <input type="button" value="FORGOT PASSWORD" />
             </form>
           </div>
           <div className="social-login">
