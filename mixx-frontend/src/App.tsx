@@ -41,14 +41,15 @@ const App: React.FC = () => {
     setShowLoading(true);
     StorageService.Get("LoginMetadataKey")
       .then((resp) => {
-        if (resp != null) setLoginMetadata(resp);
+        if (resp != null) { setLoginMetadata(resp); console.log(resp) }
         setShowLoading(false);
       })
       .catch(() => {
         setShowLoading(false);
       });
-    console.log("hello");
   }, []);
+
+
   if (showLoading) {
     return (
       <IonApp>
@@ -58,28 +59,34 @@ const App: React.FC = () => {
   }
   return (
     <IonApp>
-      <IonReactRouter>
-        {loginMetadata.tokenString != "-1" ? (
+
+      {loginMetadata.tokenString != "-1" || loginMetadata.emailId != "" ? (
+        <IonReactRouter>
           <IonSplitPane contentId="main" class="backgroundImage">
-            <Menu />
+            <Menu loginfunction={setLoginData} loginMetadata={loginMetadata} />
             <IonRouterOutlet id="main">
               <Route path="/:name" exact={true}>
-                <Page />
-              </Route>
-              <Route path="/" exact={true}>
                 <Redirect to="/home" />
+                <Page loginfunction={setLoginData} loginMetadata={loginMetadata} />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>
-        ) : (
+        </IonReactRouter>
+      ) : (
+        <IonReactRouter>
           <IonRouterOutlet id="main">
-            <Route path="/" exact={false}>
+            <Route path="/" exact={true}>
               <Redirect to="/login" />
-              <Login />
+              <Login loginfunction={setLoginData} loginMetadata={loginMetadata} />
+            </Route>
+            <Route path="/:page" exact={true}>
+              <Redirect to="/login" />
+              <Login loginfunction={setLoginData} loginMetadata={loginMetadata} />
             </Route>
           </IonRouterOutlet>
-        )}
-      </IonReactRouter>
+        </IonReactRouter>
+      )}
+
     </IonApp>
   );
 };
