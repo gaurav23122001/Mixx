@@ -49,8 +49,8 @@
 }
 
 .left-box .image-box {
-  margin-top: 50px;
-  width: 150px;
+  margin-top: 70px;
+  width: 160px;
   float: right;
   position: relative;
 }
@@ -72,6 +72,7 @@
   width: 350px;
   /* padding: 50px; */
   padding: 50px 50px 0px 50px;
+  padding-top: 30px;
   color: #fff;
 }
 
@@ -89,7 +90,7 @@
 }
 
 .form {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .form .inputBox {
@@ -114,7 +115,7 @@
   top: 0;
   left: 0;
   letter-spacing: 1px;
-  padding: 10px 0px;
+  padding: 8px 0px;
   font-size: 14px;
   color: #fff;
   transition: 0.5s;
@@ -142,6 +143,7 @@
   outline: none;
   width: 100%;
   border-radius: 100px;
+  /* margin-top: 0px; */
   padding: 8px;
   font-size: 12px;
   font-weight: bold;
@@ -187,9 +189,10 @@
 }
 
 .footer {
-  margin-top: 20px;
+  margin-top: 10px;
   color: #a8a8a8;
   font-size: 0.75rem;
+  margin-bottom: 10px;
 }
 .footer span {
   color: #fff;

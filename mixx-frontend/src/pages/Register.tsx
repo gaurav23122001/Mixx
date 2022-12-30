@@ -1,4 +1,4 @@
-import "./Login.css";
+import "./Register.css";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useEffect, useState } from "react";
@@ -68,11 +68,15 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
         </div>
         <div className="right-box">
           <div className="title">
-            <div>LOG IN</div>
+            <div>SIGN UP</div>
             <div className="line"></div>
           </div>
           <div className="form">
             <form autoComplete="off">
+              <div className="inputBox">
+                <input type="text" id="name" name="name" required />
+                <label htmlFor="name">Name</label>
+              </div>
               <div className="inputBox">
                 <input type="email" id="email" name="email" required />
                 <label htmlFor="email">Email Address</label>
@@ -89,7 +93,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </div>
               </div>
-              <input type="submit" value="LOG IN" />
+              <input type="submit" value="SIGN UP" />
             </form>
           </div>
           <div className="divider">
@@ -113,7 +117,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
           </div>
           <div className="footer">
             <div>
-              Dont have an account? <span>SIGN UP</span>{" "}
+              Allready have an account? <span>LOG IN</span>{" "}
             </div>
           </div>
         </div>
