@@ -1,10 +1,9 @@
 import { FcGoogle } from "react-icons/fc";
-import "./Page.css";
 import "./Login.css";
-import { AiFillApple } from "react-icons/ai";
+import { AiOutlineTwitter } from "react-icons/ai";
 import { SiFacebook } from "react-icons/si";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,13 +12,17 @@ const Login: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
+  useEffect(() => {
+    document.title = "Mixx - Login Page";
+  }, []);
+
   return (
     <div className="container">
       <div className="box">
         <div className="heading">Welcome Note</div>
         <div className="content">
           <div className="login">
-            <form action="">
+            <form action="" autoComplete="off">
               <div className="inputBox">
                 <input
                   type="text"
@@ -55,9 +58,9 @@ const Login: React.FC = () => {
             </div>
             <div className="social-group">
               <div className="social-icon">
-                <AiFillApple />
+                <AiOutlineTwitter />
               </div>
-              <div className="social-text">Continue With Apple</div>
+              <div className="social-text">Continue With Twitter</div>
             </div>
             <div className="social-group">
               <div className="social-icon">
