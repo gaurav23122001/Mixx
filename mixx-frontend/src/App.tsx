@@ -69,6 +69,9 @@ const App: React.FC = () => {
                 <Redirect to="/home" />
                 <Page loginfunction={setLoginData} loginMetadata={loginMetadata} />
               </Route>
+              <Route path="/:name/:name1" exact={true}>
+                <Redirect to="/home" />
+              </Route>
             </IonRouterOutlet>
           </IonSplitPane>
         </IonReactRouter>
