@@ -1,32 +1,37 @@
-import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
-import Menu from './components/Menu';
-import Page from './pages/Page';
+import {
+  IonApp,
+  IonRouterOutlet,
+  IonSplitPane,
+  setupIonicReact,
+} from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { Redirect, Route } from "react-router-dom";
+import Menu from "./components/Menu";
+import Page from "./pages/Page";
 
 /* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+import "@ionic/react/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
+import "@ionic/react/css/normalize.css";
+import "@ionic/react/css/structure.css";
+import "@ionic/react/css/typography.css";
 
 /* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
+import "@ionic/react/css/padding.css";
+import "@ionic/react/css/float-elements.css";
+import "@ionic/react/css/text-alignment.css";
+import "@ionic/react/css/text-transformation.css";
+import "@ionic/react/css/flex-utils.css";
+import "@ionic/react/css/display.css";
 
 /* Theme variables */
-import './theme/variables.css';
-import { StorageService } from './Services/StorageService';
-import { useEffect, useState } from 'react';
-import { LoginMetadata } from './Models/LoginMetadata';
-import Loading from './components/Loading';
-import Login from './pages/Login';
+import "./theme/variables.css";
+import { StorageService } from "./Services/StorageService";
+import { useEffect, useState } from "react";
+import { LoginMetadata } from "./Models/LoginMetadata";
+import Loading from "./components/Loading";
+import Login from "./pages/Login";
 
 setupIonicReact();
 
@@ -41,14 +46,16 @@ const App: React.FC = () => {
     setShowLoading(true);
     StorageService.Get("LoginMetadataKey")
       .then((resp) => {
-        if (resp != null) { setLoginMetadata(resp); console.log(resp) }
+        if (resp != null) {
+          setLoginMetadata(resp);
+          console.log(resp);
+        }
         setShowLoading(false);
       })
       .catch(() => {
         setShowLoading(false);
       });
   }, []);
-
 
   if (showLoading) {
     return (
@@ -59,37 +66,44 @@ const App: React.FC = () => {
   }
   return (
     <IonApp>
-
       {loginMetadata.tokenString != "-1" || loginMetadata.emailId != "" ? (
         <IonReactRouter>
-          <IonSplitPane contentId="main" class="backgroundImage">
-            <Menu loginfunction={setLoginData} loginMetadata={loginMetadata} />
-            <IonRouterOutlet id="main">
-              <Route path="/:name" exact={true}>
-                <Redirect to="/home" />
-                <Page loginfunction={setLoginData} loginMetadata={loginMetadata} />
-              </Route>
-              <Route path="/:name/:name1" exact={true}>
-                <Redirect to="/home" />
-              </Route>
-            </IonRouterOutlet>
-          </IonSplitPane>
+          {/* <IonSplitPane contentId="main" class="backgroundImage"> */}
+          {/* <Menu loginfunction={setLoginData} loginMetadata={loginMetadata} /> */}
+          <IonRouterOutlet id="main">
+            <Route path="/:name" exact={true}>
+              <Redirect to="/home" />
+              <Page
+                loginfunction={setLoginData}
+                loginMetadata={loginMetadata}
+              />
+            </Route>
+            <Route path="/:name/:name1" exact={true}>
+              <Redirect to="/home" />
+            </Route>
+          </IonRouterOutlet>
+          {/* </IonSplitPane> */}
         </IonReactRouter>
       ) : (
         <IonReactRouter>
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/login" />
-              <Login loginfunction={setLoginData} loginMetadata={loginMetadata} />
+              <Login
+                loginfunction={setLoginData}
+                loginMetadata={loginMetadata}
+              />
             </Route>
             <Route path="/:page" exact={true}>
               <Redirect to="/login" />
-              <Login loginfunction={setLoginData} loginMetadata={loginMetadata} />
+              <Login
+                loginfunction={setLoginData}
+                loginMetadata={loginMetadata}
+              />
             </Route>
           </IonRouterOutlet>
         </IonReactRouter>
       )}
-
     </IonApp>
   );
 };

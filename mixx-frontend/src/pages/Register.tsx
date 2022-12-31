@@ -1,4 +1,4 @@
-import "./Login.css";
+import "./Register.css";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useEffect, useState } from "react";
@@ -7,16 +7,19 @@ import { gapi } from "gapi-script";
 import { LoginMetadata } from "../Models/LoginMetadata";
 import music from "./../Assets/music.png";
 import symbol from "./../Assets/symbol.png";
-import Register from "./Register";
 
-interface LoginProps {
+interface RegisterProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
+  setShowRegister: (value: boolean) => void;
   loginMetadata: LoginMetadata;
 }
 
-const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
+const Register: React.FC<RegisterProps> = ({
+  loginfunction,
+  setShowRegister,
+  loginMetadata,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
 
   const handlePassword = () => {
     setShowPassword(!showPassword);
@@ -51,14 +54,8 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   //   console.log(response);
   // };
 
-  return showRegister ? (
-    <Register
-      loginMetadata={loginMetadata}
-      loginfunction={loginfunction}
-      setShowRegister={setShowRegister}
-    />
-  ) : (
-    <div className="container">
+  return (
+    <div className="register container">
       <div className="box">
         <div className="left-box">
           <div className="title">Welcome Note</div>
@@ -76,11 +73,15 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
         </div>
         <div className="right-box">
           <div className="title ion-text-center">
-            <div>LOG IN</div>
+            <div>SIGN UP</div>
             <div className="line"></div>
           </div>
           <div className="form">
             <form autoComplete="off">
+              <div className="inputBox">
+                <input type="text" id="name" name="name" required />
+                <label htmlFor="name">Name</label>
+              </div>
               <div className="inputBox">
                 <input type="text" id="email" name="email" required />
                 <label htmlFor="email">Email Address</label>
@@ -97,7 +98,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </div>
               </div>
-              <input type="submit" value="LOG IN" />
+              <input type="submit" value="SIGN UP" />
             </form>
           </div>
           <div className="divider">
@@ -121,13 +122,13 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
           </div>
           <div className="footer">
             <div className="ion-text-center">
-              Dont have an account?{" "}
+              Allready have an account?{" "}
               <span
                 onClick={() => {
-                  setShowRegister(true);
+                  setShowRegister(false);
                 }}
               >
-                SIGN UP
+                LOG IN
               </span>{" "}
             </div>
           </div>
@@ -137,4 +138,4 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   );
 };
 
-export default Login;
+export default Register;
