@@ -4,7 +4,14 @@ const app = express();
 require('dotenv').config();
 const morgan = require("morgan");
 
+const { authRouter } = require('./routes/auth.js');
+
 const PORT = process.env.PORT || 5000;
+
+/* Routes */
+
+app.get('/register', authRouter);
+app.get('/login', authRouter);
 
 
 app.get('/extract-audio', (req, res) => {
@@ -31,5 +38,6 @@ app.get('/audio', (req, res) => {
 app.listen(PORT, () => {
     console.log('Server listening on port ' + PORT);
 });
+
 
 

@@ -2,9 +2,9 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 
-const router = express.Router();
+const authRouter = express.Router();
 
-router.post('/register', async (req, res) => {
+authRouter.post('/register', async (req, res) => {
       console.log(req.body)
       try {
             const { name, email, password } = req.body;
@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
                         if (password) {
                               const userExists = await User
                                     .findOne({
-                                          email: email 
+                                          email: email
                                     })
                                     .exec();
                               if (userExists) {
@@ -48,7 +48,7 @@ router.post('/register', async (req, res) => {
       }
 });
 
-router.post("/login", async (req, res) => {
+authRouter.post("/login", async (req, res) => {
       try {
             const { email, password } = req.body;
             if (email) {
@@ -85,4 +85,4 @@ router.post("/login", async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = authRouter;
