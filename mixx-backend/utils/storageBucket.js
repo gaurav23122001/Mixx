@@ -22,7 +22,8 @@ const uploadFileToBucket = async (filePath) => {
             if (err) {
                 reject(err);
             } else {
-                resolve(`https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(file.name)}?alt=media`);
+                // resolve(`https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(file.name)}?alt=media`);
+                resolve(file)
             }
         });
     });
