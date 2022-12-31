@@ -18,5 +18,6 @@ const errorCodes = {
       416: "Range Not Satisfiable",
       417: "Expectation Failed",
       418: "Email Already In Use",
+      419: "Tocken Expired or Invalid",
       201: "Registered",
 }

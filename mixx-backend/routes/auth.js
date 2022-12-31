@@ -2,6 +2,8 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 
+const generateToken = require("../utils/generateToken.js");
+
 const authRouter = express.Router();
 
 authRouter.post('/register', async (req, res) => {
@@ -59,7 +61,8 @@ authRouter.post("/login", async (req, res) => {
                               const valid = await bcrypt.compare(password, user.password);
 
                               if (valid) {
-                                    res.status(200).send("Logged In");
+                                    const token = generateToken(user);
+                                    res.status(200).json({ token: token, message: "Logged in successfully" })
                               }
                               else {
                                     res.status(400).send({ error: "Incorrect Password." });
