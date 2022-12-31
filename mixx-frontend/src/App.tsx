@@ -5,8 +5,7 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route } from "react-router-dom";
-import Menu from "./components/Menu";
+import { Link, Redirect, Route } from "react-router-dom";
 import Page from "./pages/Page";
 
 /* Core CSS required for Ionic components to work properly */
@@ -66,7 +65,7 @@ const App: React.FC = () => {
   }
   return (
     <IonApp>
-      {loginMetadata.tokenString != "-1" || loginMetadata.emailId != "" ? (
+      {loginMetadata.emailId != "" ? (
         <IonReactRouter>
           {/* <IonSplitPane contentId="main" class="backgroundImage"> */}
           {/* <Menu loginfunction={setLoginData} loginMetadata={loginMetadata} /> */}
@@ -89,12 +88,11 @@ const App: React.FC = () => {
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/login" />
-              <Login
-                loginfunction={setLoginData}
-                loginMetadata={loginMetadata}
-              />
             </Route>
             <Route path="/:page" exact={true}>
+              <Redirect to="/login" />
+            </Route>
+            <Route path="/login" exact={true}>
               <Redirect to="/login" />
               <Login
                 loginfunction={setLoginData}
