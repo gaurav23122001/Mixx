@@ -1,3 +1,5 @@
+// Keeping a track of error codes and their messages, maybe we can use it later. (Optional)
+
 const errorCodes = {
       400: "Bad Request",
       401: "Unauthorized",
@@ -15,5 +17,6 @@ const errorCodes = {
       415: "Unsupported Media Type",
       416: "Range Not Satisfiable",
       417: "Expectation Failed",
-      418
+      418: "Email Already In Use",
+      201: "Registered",
 }
