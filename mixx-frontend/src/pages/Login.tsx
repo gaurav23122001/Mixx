@@ -8,6 +8,7 @@ import { LoginMetadata } from "../Models/LoginMetadata";
 import music from "./../Assets/music.png";
 import symbol from "./../Assets/symbol.png";
 import Register from "./Register";
+import { Redirect } from "react-router";
 
 interface LoginProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;

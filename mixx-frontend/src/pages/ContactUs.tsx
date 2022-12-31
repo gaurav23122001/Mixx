@@ -1,23 +1,22 @@
+
 import Menu from '../components/Menu';
 import { LoginMetadata } from '../Models/LoginMetadata';
-import './Home.css';
 
-interface HomeProps {
+interface ContactProps {
     loginfunction: (loginMetadata: LoginMetadata | null) => void;
     loginMetadata: LoginMetadata
 }
 
-const Home: React.FC<HomeProps> = ({
+const Contact: React.FC<ContactProps> = ({
     loginfunction,
     loginMetadata
 }) => {
-
     return (
         <div className="container1">
             <Menu loginMetadata={loginMetadata} loginfunction={loginfunction} />
-            <div className="main"></div>
+            <div className="main">sdasdasdasdasdasdasdasdsa</div>
         </div>
     );
 };
 
-export default Home;
+export default Contact;
