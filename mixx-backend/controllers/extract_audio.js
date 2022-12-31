@@ -9,7 +9,10 @@ const Output_Directory_path = '/home/bugswriter/Desktop/Mixx/mixx-backend/output
 
 const extractAudioFromFile = (fileName, audioFormat) => {
     return new Promise((resolve, reject) => {
-        const ffmpegProcess = new ffmpeg(Upload_Directory_path + fileName)
+
+        const videoPath = Upload_Directory_path + fileName
+
+        const ffmpegProcess = new ffmpeg(videoPath)
             .outputOptions([])
             // .audioCodec(audioFormat)
             .format(audioFormat === 'aac' ? 'adts' : audioFormat)
@@ -24,6 +27,7 @@ const extractAudioFromFile = (fileName, audioFormat) => {
 
         // When the process is finished, resolve the promise
         ffmpegProcess.on('end', () => {
+            fs.unlinkSync(videoPath)
             return resolve(
                 `${Output_Directory_path}${fileName.split('.')[0]}.${audioFormat}`
             )

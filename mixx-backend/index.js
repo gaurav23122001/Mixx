@@ -16,28 +16,24 @@ app.use(express.json());
 
 app.post('/upload-file', upload, async (req, res) => {
     // specify the output format here
+    const audioFormat = req.body.audioFormat;
     try {
-        const resp = await extractAudioFromFile(req.file.filename, 'mp3')
-        const url = await uploadFileToBucket(resp);
+        const filePath = await extractAudioFromFile(req.file.filename, audioFormat)
+        const url = await uploadFileToBucket(filePath, audioFormat);
         res.status(200).json(url)
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error + " error index file")
     }
 })
 
 app.post('/upload-url', async (req, res) => {
     const videoUrl = req.body.videoUrl;
+    const audioFormat = req.body.audioFormat;
     try {
         const videoPath = await downloadVideoFromUrl(videoUrl)
-        await extractAudioFromFile(videoPath.split('/').pop(), 'mp3')
-
-        fs.unlink(videoPath, (err) => {
-            if (err) {
-                console.error(err)
-            }
-        })
-
-        res.status(200).json('File converted successfully')
+        const filePath = await extractAudioFromFile(videoPath.split('/').pop(), audioFormat)
+        const url = await uploadFileToBucket(filePath, audioFormat);
+        res.status(200).json(url)
     } catch (error) {
         res.status(500).json('Try again! Something went wrong')
     }
