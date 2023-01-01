@@ -25,7 +25,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   const clientId =
     "413463613463-mgrsltc9uf95ieghf1iqk0k7bgps5ul9.apps.googleusercontent.com";
   useEffect(() => {
-    document.title = "Mixx - Login";
+    document.title = "Login - Mixx";
     const initClient = () => {
       gapi.client.init({
         clientId: clientId,
