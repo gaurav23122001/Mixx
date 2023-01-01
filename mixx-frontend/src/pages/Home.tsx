@@ -14,6 +14,7 @@ import { MdOutlineKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { FaMusic } from "react-icons/fa";
 import { SetStateAction, useEffect, useState } from "react";
 import URL from "../components/URL";
+import { IonProgressBar } from "@ionic/react";
 
 interface HomeProps {
     loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -48,7 +49,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata }) => {
         setSelectedFileUpload(value[0]);
         setDropDownFile(false);
     };
-
+    const now = 50;
     const uploadFileToServer = () => {
         const formData = new FormData();
 
@@ -178,6 +179,10 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata }) => {
                         <AiOutlineSync size="1.3em" />
                     </div>
                 </label>
+                <div className="progressWrapper">
+                    <IonProgressBar value={0.1} class="progress">
+                    </IonProgressBar><div className="progressValue">10%</div>
+                </div>
             </form>
         </div>
     );
