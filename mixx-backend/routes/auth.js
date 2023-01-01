@@ -2,9 +2,11 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 
-const router = express.Router();
+const generateToken = require("../utils/generateToken.js");
 
-router.post('/register', async (req, res) => {
+const authRouter = express.Router();
+
+authRouter.post('/register', async (req, res) => {
       console.log(req.body)
       try {
             const { name, email, password } = req.body;
@@ -13,7 +15,7 @@ router.post('/register', async (req, res) => {
                         if (password) {
                               const userExists = await User
                                     .findOne({
-                                          email: email 
+                                          email: email
                                     })
                                     .exec();
                               if (userExists) {
@@ -48,7 +50,8 @@ router.post('/register', async (req, res) => {
       }
 });
 
-router.post("/login", async (req, res) => {
+authRouter.post("/login", async (req, res) => {
+      console.log(req.body);
       try {
             const { email, password } = req.body;
             if (email) {
@@ -59,7 +62,8 @@ router.post("/login", async (req, res) => {
                               const valid = await bcrypt.compare(password, user.password);
 
                               if (valid) {
-                                    res.status(200).send("Logged In");
+                                    const token = generateToken(user);
+                                    res.status(200).json({ token: token, message: "Logged in successfully" })
                               }
                               else {
                                     res.status(400).send({ error: "Incorrect Password." });
@@ -85,4 +89,4 @@ router.post("/login", async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = authRouter;
