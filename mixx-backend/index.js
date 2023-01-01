@@ -12,12 +12,15 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:8100',
+}));
 app.use(express.json());
 
 app.post('/upload-file', upload, async (req, res) => {
     // specify the output format here
     const audioFormat = req.body.audioFormat;
+    
     try {
         const filePath = await extractAudioFromFile(req.file.filename, audioFormat)
         const url = await uploadFileToBucket(filePath, audioFormat);

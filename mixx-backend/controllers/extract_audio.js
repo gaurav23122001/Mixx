@@ -10,6 +10,7 @@ const Output_Directory_path = '/home/bugswriter/Desktop/Mixx/mixx-backend/output
 
 
 const extractAudioFromFile = (fileName, audioFormat) => {
+    console.log(fileName, audioFormat)
     return new Promise((resolve, reject) => {
 
         const videoPath = Upload_Directory_path + fileName
