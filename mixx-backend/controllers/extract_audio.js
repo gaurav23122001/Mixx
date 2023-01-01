@@ -2,6 +2,8 @@ const ffmpeg = require("fluent-ffmpeg");
 const fs = require('fs');
 const request = require('request');
 const getRandomId = require("../utils/file_id");
+const io = require('socket.io');
+const socket = io();
 
 const Upload_Directory_path = '/home/bugswriter/Desktop/Mixx/mixx-backend/uploads/';
 const Output_Directory_path = '/home/bugswriter/Desktop/Mixx/mixx-backend/outputs/';
@@ -18,6 +20,7 @@ const extractAudioFromFile = (fileName, audioFormat) => {
             .format(audioFormat === 'aac' ? 'adts' : audioFormat)
             .on('progress', (progress) => {
                 console.log('Processing: ' + Math.ceil(progress.percent) + '% done');
+                socket.emit('ffmpeg_progress', Math.ceil(progress.percent));
             })
             .on('error', (err) => {
                 console.error(err);

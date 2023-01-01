@@ -1,18 +1,19 @@
 const express = require('express');
+const app = express();
 const cors = require('cors');
-const fs = require('fs');
 require('dotenv').config();
 const morgan = require("morgan");
 const upload = require('./middlewares/multer');
 const { extractAudioFromFile, downloadVideoFromUrl } = require('./controllers/extract_audio');
-const uploadFileToBucket = require('./utils/storageBucket');
-
-const app = express();
+const uploadFileToBucket = require('./controllers/storageBucket');
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 
 app.use(cors());
 app.use(express.json());
-
 
 app.post('/upload-file', upload, async (req, res) => {
     // specify the output format here
@@ -39,12 +40,17 @@ app.post('/upload-url', async (req, res) => {
     }
 })
 
+
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log('Server listening on port ' + PORT);
+io.on('connection', (socket) => {
+    console.log('a user connected' + socket.id);
 });
+
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+})

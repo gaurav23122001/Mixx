@@ -23,6 +23,6 @@ const upload = multer({
             cb('Error: Invalid file format');
         }
     }
-}).single('file');
+}).single('video');
 
 module.exports = upload;
