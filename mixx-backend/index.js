@@ -1,5 +1,4 @@
 const express = require('express');
-const ffmpeg = require('fluent-ffmpeg');
 const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
@@ -33,29 +32,58 @@ mongoose
 
 
 /* Routes */
+=======
+const cors = require('cors');
+require('dotenv').config();
+const morgan = require("morgan");
+const upload = require('./middlewares/multer');
+const { extractAudioFromFile, downloadVideoFromUrl } = require('./controllers/extract_audio');
+const uploadFileToBucket = require('./controllers/storageBucket');
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 
+app.use(cors());
+app.use(express.json());
 
-app.get('/extract-audio', (req, res) => {
-    // Process the video file and extract the audio
-    ffmpeg()
-        .input('test.mp4')
-        .outputOptions(['-vn', '-acodec libmp3lame', '-ab 128k', '-ar 44100'])
-        .on('error', (err) => {
-            console.error(err);
-        })
-        .on('end', () => {
-            console.log('Conversion complete');
-        })
-        .save('output.mp3');
+app.post('/upload-file', upload, async (req, res) => {
+    // specify the output format here
+    const audioFormat = req.body.audioFormat;
+    try {
+        const filePath = await extractAudioFromFile(req.file.filename, audioFormat)
+        const url = await uploadFileToBucket(filePath, audioFormat);
+        res.status(200).json(url)
+    } catch (error) {
+        res.status(500).json(error + " error index file")
+    }
+})
 
+app.post('/upload-url', async (req, res) => {
+    const videoUrl = req.body.videoUrl;
+    const audioFormat = req.body.audioFormat;
+    try {
+        const videoPath = await downloadVideoFromUrl(videoUrl)
+        const filePath = await extractAudioFromFile(videoPath.split('/').pop(), audioFormat)
+        const url = await uploadFileToBucket(filePath, audioFormat);
+        res.status(200).json(url)
+    } catch (error) {
+        res.status(500).json('Try again! Something went wrong')
+    }
+})
+
+
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+})
+
+
+io.on('connection', (socket) => {
+    console.log('a user connected' + socket.id);
 });
-
-app.get('/audio', (req, res) => {
-    // Return the audio file as a response
-    res.set('Content-Type', 'audio/mpeg');
-    res.sendFile('output.mp3', { root: __dirname });
-});
-
 
 

@@ -1,2 +1,6 @@
 node_modules
 .env
+.mp4
+firebase-admin-creds.json
+uploads
+output

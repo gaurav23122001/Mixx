@@ -1,105 +1,94 @@
-import {
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-} from '@ionic/react';
-
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 import { Redirect } from "react-router";
 
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
-import './Menu.css';
-import { GoogleLogout } from 'react-google-login';
-import { gapi } from 'gapi-script';
+import "./Menu.css";
+import { GoogleLogout } from "react-google-login";
 import { LoginMetadata } from "../Models/LoginMetadata";
-import { StorageService } from '../Services/StorageService';
-import Login from '../pages/Login';
+import { StorageService } from "../Services/StorageService";
+import { AiFillHome, AiFillContacts, AiOutlineLogout } from "react-icons/ai";
+import { SiFiles } from "react-icons/si";
+import { useState } from "react";
+import {
+  MdFactCheck,
+  MdKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
+import Login from "../pages/Login";
 
-interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
-}
-
-const appPages: AppPage[] = [
-  {
-    title: 'Inbox',
-    url: '/page/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
-  },
-  {
-    title: 'Outbox',
-    url: '/page/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
-  },
-  {
-    title: 'Favorites',
-    url: '/page/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
-  },
-  {
-    title: 'Archived',
-    url: '/page/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
-  },
-  {
-    title: 'Trash',
-    url: '/page/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/page/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
-  }
-];
 interface MenuProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
-  loginMetadata: LoginMetadata
+  loginMetadata: LoginMetadata;
 }
-const Menu: React.FC<MenuProps> = ({
-  loginMetadata,
-  loginfunction
-}) => {
+const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
   const location = useLocation();
-  const clientId = '413463613463-mgrsltc9uf95ieghf1iqk0k7bgps5ul9.apps.googleusercontent.com';
+  const clientId =
+    "413463613463-mgrsltc9uf95ieghf1iqk0k7bgps5ul9.apps.googleusercontent.com";
   const logOut = () => {
     StorageService.Logout();
     loginfunction(new LoginMetadata("-1"));
   };
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
   return (
-    <IonMenu contentId="main" type="overlay">
-      <IonContent>
-        <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
-          {appPages.map((appPage, index) => {
-            return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                  <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
-                  <IonLabel>{appPage.title}</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-            );
-          })}
-          <GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />
-        </IonList>
-      </IonContent>
-    </IonMenu>
+    <div className={sidebarOpen ? "sidebar sidebar-open" : "sidebar"}>
+      <div className="sidebar-top"></div>
+      <div
+        className={sidebarOpen ? "sidebar-top-icon-open" : "sidebar-top-icon"}
+        onClick={handleSidebar}
+      >
+        {sidebarOpen ? (
+          <MdKeyboardArrowLeft size="1.5em" />
+        ) : (
+          <MdOutlineKeyboardArrowRight size="1.5em" />
+        )}
+      </div>
+      <nav>
+        <ul>
+          <Link to="/home" className="menuLink">
+            <li>
+              <span className="icon">
+                <AiFillHome size="1.2em" />
+              </span>
+              <span className="nav-title">Home</span>
+            </li>
+          </Link>
+          <Link to="/files" className="menuLink">
+            <li>
+              <span className="icon">
+                <SiFiles size="1.2em" />
+              </span>
+              <span className="nav-title">Files</span>
+            </li>
+          </Link>
+          <Link to="/about" className="menuLink">
+            <li>
+              <span className="icon">
+                <MdFactCheck size="1.2em" />
+              </span>
+              <span className="nav-title">About</span>
+            </li>
+          </Link>
+          <Link to="/contact" className="menuLink">
+            <li>
+              <span className="icon">
+                <AiFillContacts size="1.2em" />
+              </span>
+              <span className="nav-title">Contact</span>
+            </li>
+          </Link>
+          <li></li>
+        </ul>
+        <GoogleLogout
+          clientId={clientId}
+          buttonText="Log out"
+          onLogoutSuccess={logOut}
+        />
+      </nav>
+    </div>
   );
 };
 
