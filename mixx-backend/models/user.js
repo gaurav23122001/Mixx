@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
             required: true
       },
       savedProjects: {
-            type: Array,
+            type: [mongoose.Schema.Types.ObjectId],
             required: false
       }
 });
