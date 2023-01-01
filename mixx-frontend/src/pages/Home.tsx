@@ -13,6 +13,7 @@ import {
 import { MdOutlineKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { FaMusic } from "react-icons/fa";
 import { SetStateAction, useEffect, useState } from "react";
+import URL from "../components/URL";
 
 interface HomeProps {
     loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -69,6 +70,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata }) => {
     return (
         <div className="container1">
             <Menu loginMetadata={loginMetadata} loginfunction={loginfunction} />
+            <URL loginMetadata={loginMetadata} loginfunction={loginfunction} setShowPopover={setShowPopover} showPopover={showPopover} />
             <form className="main" onSubmit={(e) => {
                 e.preventDefault();
             }}>
