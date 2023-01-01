@@ -1,5 +1,3 @@
-
-
 import { Link, useLocation } from "react-router-dom";
 import { Redirect } from "react-router";
 
@@ -7,10 +5,14 @@ import "./Menu.css";
 import { GoogleLogout } from "react-google-login";
 import { LoginMetadata } from "../Models/LoginMetadata";
 import { StorageService } from "../Services/StorageService";
-import { AiFillHome, AiFillContacts } from "react-icons/ai";
+import { AiFillHome, AiFillContacts, AiOutlineLogout } from "react-icons/ai";
 import { SiFiles } from "react-icons/si";
 import { useState } from "react";
-import { MdFactCheck, MdKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import {
+  MdFactCheck,
+  MdKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
 import Login from "../pages/Login";
 
 interface MenuProps {
@@ -34,7 +36,10 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
   return (
     <div className={sidebarOpen ? "sidebar sidebar-open" : "sidebar"}>
       <div className="sidebar-top"></div>
-      <div className={sidebarOpen ? "sidebar-top-icon-open" : "sidebar-top-icon"} onClick={handleSidebar}>
+      <div
+        className={sidebarOpen ? "sidebar-top-icon-open" : "sidebar-top-icon"}
+        onClick={handleSidebar}
+      >
         {sidebarOpen ? (
           <MdKeyboardArrowLeft size="1.5em" />
         ) : (
@@ -75,6 +80,7 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
               <span className="nav-title">Contact</span>
             </li>
           </Link>
+          <li></li>
         </ul>
         <GoogleLogout
           clientId={clientId}
