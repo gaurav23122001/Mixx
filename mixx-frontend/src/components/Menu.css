@@ -14,9 +14,7 @@
   height: 40px;
   background-color: #636363;
   position: absolute;
-  /* top: 4; */
   margin-top: 30px;
-  /* margin-left: 20px; */
   margin-left: 20px;
   border-radius: 50%;
 }
@@ -24,7 +22,6 @@
 .sidebar-top-icon {
   position: absolute;
   margin-top: 39px;
-  /* margin-right: 5px; */
   margin-left: 59px;
   cursor: pointer;
 }
@@ -32,7 +29,6 @@
 .sidebar-top-icon-open {
   position: absolute;
   margin-top: 39px;
-  /* margin-right: 5px; */
   margin-left: 59px;
   cursor: pointer;
 }
@@ -45,12 +41,6 @@ nav {
   justify-content: center;
   align-items: center;
 }
-
-/* 
-nav li {
-  display: flex;
-  justify-content: space-around;
-} */
 
 nav li {
   padding: 20px 0px;
@@ -68,7 +58,6 @@ nav li {
 nav .icon {
   color: #0744c6 !important;
   cursor: pointer;
-  /* width: 100px !important ; */
 }
 
 .sidebar-open {
