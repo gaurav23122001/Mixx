@@ -43,7 +43,6 @@ const Register: React.FC<RegisterProps> = ({
   });
   const onGoogleSuccess = (res: any) => {
     console.log("success:", res.profileObj);
-    // loginMetadata.emailId = res.profileObj.email;
     let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
     newLoginMetadata.emailId = res.profileObj.email;
     loginfunction(newLoginMetadata);
@@ -52,19 +51,12 @@ const Register: React.FC<RegisterProps> = ({
     console.log("failed:", err);
   };
 
-  // const responseFacebook = (response: any) => {
-  //   let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
-  //   newLoginMetadata.emailId = response.email;
-  //   loginfunction(newLoginMetadata);
-  //   console.log(response);
-  // };
-
   return (
-    <div className="register container">
+    <div className="register register-container">
       <div className="box">
         <div className="left-box">
           <div className="title">Welcome Note</div>
-          <div className="line"></div>
+          <div className="title-underline"></div>
           <div className="content">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
             laboriosam aperiam ex quos, non repellendus molestias quasi quis
@@ -72,7 +64,7 @@ const Register: React.FC<RegisterProps> = ({
             dicta laborum voluptate nobis quia tempora aperiam id distinctio
           </div>
           <div className="image-box">
-            <img src={symbol} alt="" className="img1" />
+            <img src={symbol} alt="" className="music-symbol" />
             <img src={music} alt="" />
           </div>
         </div>

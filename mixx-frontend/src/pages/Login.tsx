@@ -9,7 +9,6 @@ import { LoginMetadata } from "../Models/LoginMetadata";
 import music from "./../Assets/music.png";
 import symbol from "./../Assets/symbol.png";
 import Register from "./Register";
-import { Redirect } from "react-router";
 
 interface LoginProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -40,7 +39,6 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   });
   const onGoogleSuccess = (res: any) => {
     console.log("success:", res.profileObj);
-    // loginMetadata.emailId = res.profileObj.email;
     let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
     newLoginMetadata.emailId = res.profileObj.email;
     loginfunction(newLoginMetadata);
@@ -49,13 +47,6 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
     console.log("failed:", err);
   };
 
-  // const responseFacebook = (response: any) => {
-  //   let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
-  //   newLoginMetadata.emailId = response.email;
-  //   loginfunction(newLoginMetadata);
-  //   console.log(response);
-  // };
-
   return showRegister ? (
     <Register
       loginMetadata={loginMetadata}
@@ -63,11 +54,11 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
       setShowRegister={setShowRegister}
     />
   ) : (
-    <div className="container">
+    <div className="login-container login">
       <div className="box">
         <div className="left-box">
           <div className="title">Welcome Note</div>
-          <div className="line"></div>
+          <div className="title-underline"></div>
           <div className="content">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
             laboriosam aperiam ex quos, non repellendus molestias quasi quis
@@ -75,7 +66,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
             dicta laborum voluptate nobis quia tempora aperiam id distinctio
           </div>
           <div className="image-box">
-            <img src={symbol} alt="" className="img1" />
+            <img src={symbol} alt="" className="music-symbol" />
             <img src={music} alt="" />
           </div>
         </div>
