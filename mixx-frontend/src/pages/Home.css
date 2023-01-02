@@ -49,6 +49,7 @@
   border-radius: 50px;
   padding-bottom: 40px;
 }
+
 .dropdown .dropdown-top {
   display: flex;
   align-items: center;
@@ -74,4 +75,24 @@
   cursor: pointer;
   justify-content: center;
   margin-left: 0px;
+}
+
+.progressWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.progress {
+  height: 65px;
+  width: 290px;
+  border-radius: 35px;
+}
+
+.progressValue {
+  position: relative;
+  bottom: 43px;
+  font-weight: 700;
+  font-size: 20px;
 }

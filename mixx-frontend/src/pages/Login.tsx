@@ -1,5 +1,6 @@
 import "./Login.css";
 import { AiOutlineGoogle } from "react-icons/ai";
+import axios from "axios";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { GoogleLogin } from "react-google-login";
@@ -14,6 +15,9 @@ interface LoginProps {
   loginMetadata: LoginMetadata;
 }
 
+let email = "";
+let password = "";
+
 const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -24,7 +28,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
   const clientId =
     "413463613463-mgrsltc9uf95ieghf1iqk0k7bgps5ul9.apps.googleusercontent.com";
   useEffect(() => {
-    document.title = "Mixx - Login";
+    document.title = "Login - Mixx";
     const initClient = () => {
       gapi.client.init({
         clientId: clientId,
@@ -72,9 +76,35 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
             <div className="line"></div>
           </div>
           <div className="form">
-            <form autoComplete="off">
+            <form
+              autoComplete="off"
+              onSubmit={(event) => {
+                event.preventDefault();
+                axios
+                  .post("http://localhost:5005/auth/login", {
+                    email: email,
+                    password: password,
+                  })
+                  .then((res) => {
+                    alert("Login Successful");
+                    console.log(res);
+                  })
+                  .catch((err) => {
+                    console.log(err.response.data.error);
+                    alert(err.response.data.error);
+                  });
+              }}
+            >
               <div className="inputBox">
-                <input type="text" id="email" name="email" required />
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  onChange={(e) => {
+                    email = e.target.value;
+                  }}
+                  required
+                />
                 <label htmlFor="email">Email Address</label>
               </div>
               <div className="inputBox">
@@ -82,6 +112,9 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
+                  onChange={(e) => {
+                    password = e.target.value;
+                  }}
                   required
                 />
                 <label htmlFor="password">Password</label>

@@ -4,9 +4,14 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
+import axios from "axios";
 import { LoginMetadata } from "../Models/LoginMetadata";
 import music from "./../Assets/music.png";
 import symbol from "./../Assets/symbol.png";
+
+let name = "";
+let email = "";
+let password = "";
 
 interface RegisterProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -69,13 +74,46 @@ const Register: React.FC<RegisterProps> = ({
             <div className="line"></div>
           </div>
           <div className="form">
-            <form autoComplete="off">
+            <form
+              autoComplete="off"
+              onSubmit={(e) => {
+                e.preventDefault();
+                axios
+                  .post("http://localhost:5005/auth/register", {
+                    name: name,
+                    email: email,
+                    password: password,
+                  })
+                  .then((res) => {
+                    console.log(res);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+            >
               <div className="inputBox">
-                <input type="text" id="name" name="name" required />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  onChange={(e) => {
+                    name = e.target.value;
+                  }}
+                />
                 <label htmlFor="name">Name</label>
               </div>
               <div className="inputBox">
-                <input type="text" id="email" name="email" required />
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                  onChange={(e) => {
+                    email = e.target.value;
+                  }}
+                />
                 <label htmlFor="email">Email Address</label>
               </div>
               <div className="inputBox">
@@ -83,6 +121,9 @@ const Register: React.FC<RegisterProps> = ({
                   type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
+                  onChange={(e) => {
+                    password = e.target.value;
+                  }}
                   required
                 />
                 <label htmlFor="password">Password</label>
