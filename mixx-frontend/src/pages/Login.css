@@ -4,26 +4,26 @@
   box-sizing: border-box;
 }
 
-.container {
+.login-container {
   background-image: url("./../Assets/bg.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.box {
+.login .box {
   background-color: rgba(255, 255, 255, 0.2);
   display: flex;
   border-radius: 30px;
 }
 
-.left-box {
+.login .left-box {
   width: 350px;
   background-color: white;
   border-top-left-radius: 30px;
@@ -31,7 +31,7 @@
   text-align: left;
 }
 
-.left-box .title {
+.login .left-box .title {
   color: #0744c6;
   font-weight: bold;
   font-size: 1.3rem;
@@ -39,7 +39,7 @@
   padding-left: 30px;
 }
 
-.left-box .line {
+.login .left-box .title-underline {
   height: 5px;
   width: 85px;
   background-color: #0744c6;
@@ -48,27 +48,27 @@
   margin-bottom: 40px;
 }
 
-.left-box .image-box {
+.login .left-box .image-box {
   margin-top: 50px;
   width: 150px;
   float: right;
   position: relative;
 }
 
-.img1 {
+.login .music-symbol {
   position: absolute;
   top: -30px;
   left: -10px;
 }
 
-.left-box .content {
+.login .left-box .content {
   color: #a8a8a8;
   padding: 0px 30px;
 }
 
 /* ------------------------------------------------------------------------------- */
 
-.right-box {
+.login .right-box {
   width: 350px;
   /* padding: 50px; */
   padding: 50px 50px 0px 50px;
@@ -76,12 +76,12 @@
   color: #fff;
 }
 
-.right-box .title {
+.login .right-box .title {
   margin: auto;
   color: #fff;
   font-weight: bold;
 }
-.right-box .line {
+.login .right-box .line {
   height: 3px;
   width: 65px;
   background-color: #fff;
@@ -89,15 +89,15 @@
   margin-top: 1px;
 }
 
-.form {
+.login .form {
   padding-top: 20px;
 }
 
-.form .inputBox {
+.login .form .inputBox {
   position: relative;
 }
 
-.form .inputBox input {
+.login .form .inputBox input {
   width: 100%;
   padding: 10px;
   padding-left: 0px;
@@ -110,7 +110,7 @@
   outline: none;
 }
 
-.form .inputBox label {
+.login .form .inputBox label {
   position: absolute;
   top: 0;
   left: 0;
@@ -121,22 +121,22 @@
   transition: 0.5s;
 }
 
-.eye-icon {
+.login .eye-icon {
   position: absolute;
   top: 20px;
   right: 0;
   color: #fff;
 }
 
-.form .inputBox input:focus ~ label,
-.form .inputBox input:valid ~ label {
+.login .form .inputBox input:focus ~ label,
+.login .form .inputBox input:valid ~ label {
   top: -20px;
   left: 0;
   color: #fff;
   font-size: 10px;
 }
 
-.form input[type="submit"] {
+.login .form input[type="submit"] {
   background: #fff;
   color: #0744c6;
   border: none;
@@ -148,31 +148,31 @@
   font-weight: bold;
 }
 
-.divider {
+.login .divider {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.divider .left {
+.login .divider .left {
   height: 1px;
   width: 100px;
   background-color: #e7e7e7;
 }
-.divider .right {
+.login .divider .right {
   height: 1px;
   width: 100px;
   background-color: #e7e7e7;
 }
 
-.divider .content {
+.login .divider .content {
   font-size: 10px;
   color: #e7e7e7;
 }
 
 /* --------------------------------------------------------------------------- */
-.social-login {
+.login .social-login {
   width: 55px;
   background-color: rgb(217, 217, 217, 0.2);
   margin: auto;
@@ -181,19 +181,33 @@
   border-radius: 20px;
 }
 
-.social-login div {
+.login .social-login div {
   color: #fff;
   margin: auto;
   cursor: pointer;
 }
 
-.footer {
+.login .footer {
   margin-top: 30px;
   color: #a8a8a8;
   font-size: 0.75rem;
 }
-.footer span {
+.login .footer span {
   color: #fff;
   font-weight: bold;
   cursor: pointer;
+}
+
+@media (max-width: 750px) {
+  .login .box {
+    flex-direction: column;
+  }
+  .login .left-box {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 30px;
+  }
+  .login .footer {
+    margin-bottom: 20px;
+  }
 }

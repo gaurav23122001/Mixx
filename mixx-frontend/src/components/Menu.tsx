@@ -5,8 +5,9 @@ import "./Menu.css";
 import { GoogleLogout } from "react-google-login";
 import { LoginMetadata } from "../Models/LoginMetadata";
 import { StorageService } from "../Services/StorageService";
-import { AiFillHome, AiFillContacts, AiOutlineLogout } from "react-icons/ai";
+import { AiFillHome, AiFillContacts } from "react-icons/ai";
 import { SiFiles } from "react-icons/si";
+import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
 import {
   MdFactCheck,
@@ -29,6 +30,9 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const href = window.location.href;
+  const arr = href.split("/");
+  const active = arr.slice(-1)[0];
 
   const handleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -49,7 +53,7 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
       <nav>
         <ul>
           <Link to="/home" className="menuLink">
-            <li>
+            <li className={active === "home" ? "active" : ""}>
               <span className="icon">
                 <AiFillHome size="1.2em" />
               </span>
@@ -57,7 +61,7 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
             </li>
           </Link>
           <Link to="/files" className="menuLink">
-            <li>
+            <li className={active === "files" ? "active" : ""}>
               <span className="icon">
                 <SiFiles size="1.2em" />
               </span>
@@ -65,7 +69,7 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
             </li>
           </Link>
           <Link to="/about" className="menuLink">
-            <li>
+            <li className={active === "about" ? "active" : ""}>
               <span className="icon">
                 <MdFactCheck size="1.2em" />
               </span>
@@ -73,21 +77,23 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction }) => {
             </li>
           </Link>
           <Link to="/contact" className="menuLink">
-            <li>
+            <li className={active === "contact" ? "active" : ""}>
               <span className="icon">
                 <AiFillContacts size="1.2em" />
               </span>
               <span className="nav-title">Contact</span>
             </li>
           </Link>
-          <li></li>
         </ul>
-        <GoogleLogout
+        {/* <GoogleLogout
           clientId={clientId}
           buttonText="Log out"
           onLogoutSuccess={logOut}
-        />
+        /> */}
       </nav>
+      <div className="logout">
+        <FiLogOut /> <span>Logout</span>
+      </div>
     </div>
   );
 };
