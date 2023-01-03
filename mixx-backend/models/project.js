@@ -9,7 +9,7 @@ const projectSchema = new mongoose.Schema({
             type: String,
             required: false
       },
-      audio: {
+      audioURL: {
             type: String,
             required: true
       },
