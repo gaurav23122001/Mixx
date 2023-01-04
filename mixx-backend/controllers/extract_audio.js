@@ -5,8 +5,8 @@ const getRandomId = require("../utils/file_id");
 const io = require('socket.io');
 const socket = io();
 
-const Upload_Directory_path = '/home/bugswriter/Desktop/Mixx/mixx-backend/uploads/';
-const Output_Directory_path = '/home/bugswriter/Desktop/Mixx/mixx-backend/outputs/';
+const Upload_Directory_path = '/home/ravan/Desktop/Codes/Mixx/mixx-backend/uploads/';
+const Output_Directory_path = '/home/ravan/Desktop/Codes/Mixx/mixx-backend/outputs/';
 
 
 const extractAudioFromFile = (fileName, audioFormat) => {

@@ -27,16 +27,16 @@ const deleteProject = async (req, res) => {
 }
 
 
-deleteProjectRouter.post('/delete', verify, (req, res) => {
+deleteProjectRouter.post('/delete',  (req, res) => {
       const { projectId } = req.body;
+      // console.log(projectId)
+      // console.log(req.body);
       if (projectId) {
             deleteProject(req, res);
       }
       else {
             res.status(400).send({ error: "Project Id is compulsory." });
       }
-      console.log(req.body);
-      res.status(200).send("Project Deleted");
 });
 
 module.exports = { deleteProjectRouter };
