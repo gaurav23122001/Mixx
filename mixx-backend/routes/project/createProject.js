@@ -1,5 +1,5 @@
 const express = require('express');
-const verify = require('../../middleware/verify');
+const verify = require('../../middlewares/verify');
 
 const projectRouter = express.Router();
 
