@@ -35,7 +35,6 @@ app.post('/upload-url', async (req, res) => {
 })
 
 
-
 app.post('/upload-file', upload, async (req, res) => {
     // specify the output format here
     const audioFormat = req.body.audioFormat;
@@ -71,5 +70,3 @@ mongoose
         })
     )
     .catch((err) => console.log(err));
-
-
