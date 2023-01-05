@@ -71,7 +71,7 @@ const App: React.FC = () => {
           {/* <Menu loginfunction={setLoginData} loginMetadata={loginMetadata} /> */}
           <IonRouterOutlet id="main">
             <Route path="/:name" exact={true}>
-              <Redirect to="/home" />
+              {/* <Redirect to="/home" /> */}
               <Page
                 loginfunction={setLoginData}
                 loginMetadata={loginMetadata}
