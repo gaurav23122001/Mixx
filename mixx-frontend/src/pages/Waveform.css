@@ -1,0 +1,19 @@
+#waveform {
+  width: 90vw;
+  background-color: #d9d9d9;
+  padding: 70px 0px;
+  border-radius: 20px;
+  /* height: 200px; */
+  /* paddi */
+}
+
+.controls {
+  /* margin: auto; */
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+#waveform-timeline {
+  margin-top: 5px;
+}
