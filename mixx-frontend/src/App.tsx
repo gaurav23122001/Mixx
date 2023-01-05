@@ -38,8 +38,9 @@ const App: React.FC = () => {
   const [loginMetadata, setLoginMetadata] = useState(new LoginMetadata("-1"));
   const [showLoading, setShowLoading] = useState(false);
   let setLoginData = (resp: any) => {
-    setLoginMetadata(resp);
     StorageService.Set("LoginMetadataKey", resp);
+    setLoginMetadata(resp);
+    console.log("resp", resp)
   };
   useEffect(() => {
     setShowLoading(true);

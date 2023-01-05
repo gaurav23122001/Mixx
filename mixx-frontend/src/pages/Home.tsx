@@ -24,25 +24,26 @@ interface HomeProps {
     menu: boolean,
     sidebarOpen: boolean,
     screen: boolean,
-    setMenu: (args: boolean)=>void,
-    setScreen: (args: boolean)=>void,
-    setSidebarOpen: (args: boolean)=>void,
+    setMenu: (args: boolean) => void,
+    setScreen: (args: boolean) => void,
+    setSidebarOpen: (args: boolean) => void,
 }
 
 
-const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata,menu,setSidebarOpen,setScreen,setMenu,screen,sidebarOpen  }) => {
+const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSidebarOpen, setScreen, setMenu, screen, sidebarOpen }) => {
     const [dropDownFile, setDropDownFile] = useState(false);
     const [dropDownAudio, setDropDownAudio] = useState(false);
     const [selectedFormat, setSelectedFormat] = useState("mp3");
     const [showPopover, setShowPopover] = useState(false);
     const [selectedFileUpload, setSelectedFileUpload] = useState<any>({});
     const supportedAudio = ["wav", "aac", "ogg", "mp3"];
-    
+
     useEffect(() => {
         document.title = "Home - Mixx";
-        if(window.screen.width < 420)  {
+        if (window.screen.width < 420) {
             setScreen(false)
         }
+        console.log(loginMetadata)
     })
 
     const handleDropdownFile = () => {
@@ -82,19 +83,19 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata,menu,setSideba
 
     return (
         <div className="container1">
-            {screen ? 
-            <Menu setMenu={setMenu} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginMetadata={loginMetadata} loginfunction={loginfunction} />
-            :
-            menu?
-            null
-            :
-            <img onClick={()=>{setMenu(true); setSidebarOpen(true)}} className="menu" src={menuImg} alt =''/>
+            {screen ?
+                <Menu setMenu={setMenu} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginMetadata={loginMetadata} loginfunction={loginfunction} />
+                :
+                menu ?
+                    null
+                    :
+                    <img onClick={() => { setMenu(true); setSidebarOpen(true) }} className="menu" src={menuImg} alt='' />
             }
-            {menu ? 
-            <Menu setMenu={setMenu} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginMetadata={loginMetadata}    loginfunction={loginfunction} />
-            :
-            null
-        }
+            {menu ?
+                <Menu setMenu={setMenu} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginMetadata={loginMetadata} loginfunction={loginfunction} />
+                :
+                null
+            }
             <URL loginMetadata={loginMetadata} loginfunction={loginfunction} setShowPopover={setShowPopover} showPopover={showPopover} />
             <form className="main" onSubmit={(e) => {
                 e.preventDefault();

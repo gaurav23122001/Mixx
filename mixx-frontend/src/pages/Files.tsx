@@ -1,7 +1,6 @@
 import Menu from "../components/Menu";
 import { LoginMetadata } from "../Models/LoginMetadata";
 import "./Files.css";
-import Waveform from "./Waveform";
 import PlayList from "./PlayList";
 import { useState } from "react";
 import { BsTagFill } from "react-icons/bs";
@@ -23,17 +22,24 @@ const tracks = [
 
 interface FilesProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
-  loginMetadata: LoginMetadata;
+  loginMetadata: LoginMetadata,
+  menu: boolean,
+  sidebarOpen: boolean,
+  screen: boolean,
+  setMenu: (args: boolean) => void,
+  setScreen: (args: boolean) => void,
+  setSidebarOpen: (args: boolean) => void,
 }
 
-const Files: React.FC<FilesProps> = ({ loginfunction, loginMetadata }) => {
+const Files: React.FC<FilesProps> = ({ loginfunction,
+  loginMetadata, menu, setSidebarOpen, setScreen, setMenu, screen, sidebarOpen }) => {
   const [selectedTrack, setSelectedTrack] = useState(tracks[0]);
   return (
     <div className="container1 waveform">
-      <Menu loginMetadata={loginMetadata} loginfunction={loginfunction} />
+      <Menu setMenu={setMenu} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginMetadata={loginMetadata} loginfunction={loginfunction} />
       <div className="waveform-container">
         <div className="main ">
-          <Waveform url={selectedTrack.url} />
+          {/* <Waveform url={selectedTrack.url} /> */}
           {/* <PlayList
           tracks={tracks}
           selectedTrack={selectedTrack}
