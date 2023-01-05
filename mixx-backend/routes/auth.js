@@ -56,14 +56,21 @@ authRouter.post("/login", async (req, res) => {
             const { email, password } = req.body;
             if (email) {
                   if (password) {
-                        const user = await User.findOne({ email: email }, 'password').exec();
+                        const user = await User.findOne({ email: email }).exec();
 
                         if (user) {
                               const valid = await bcrypt.compare(password, user.password);
 
                               if (valid) {
                                     const token = generateToken(user);
-                                    res.status(200).json({ token: token, message: "Logged in successfully" })
+                                    // console.log("hy", user)
+                                    res.status(200).json({
+                                          'tokenString': token,
+                                          'name': user.name,
+                                          'emailId': user.email,
+                                          'id': user._id,
+                                          message: "Logged in successfully"
+                                    })
                               }
                               else {
                                     res.status(400).send({ error: "Incorrect Password." });

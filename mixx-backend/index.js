@@ -13,6 +13,8 @@ const mongoose = require('mongoose');
 
 const authRouter = require('./routes/auth.js');
 const projectRouter = require('./routes/project/createProject.js');
+const { deleteProjectRouter } = require('./routes/project/deleteProject');
+const commentAndTimeRouter = require('./routes/project/addCommentAndTime');
 
 app.use(cors({
     origin: 'http://localhost:8100',
@@ -50,6 +52,8 @@ app.post('/upload-file', upload, async (req, res) => {
 
 app.use('/auth', authRouter);
 app.use('/project', projectRouter);
+app.use('/project', deleteProjectRouter);
+app.use('/project', commentAndTimeRouter)
 
 
 if (process.env.NODE_ENV === 'development') {
