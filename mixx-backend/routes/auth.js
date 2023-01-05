@@ -63,7 +63,7 @@ authRouter.post("/login", async (req, res) => {
 
                               if (valid) {
                                     const token = generateToken(user);
-                                    res.status(200).json({ token: token, message: "Logged in successfully" })
+                                    res.status(200).json({ token: token, user: user, message: "Logged in successfully" })
                               }
                               else {
                                     res.status(400).send({ error: "Incorrect Password." });
