@@ -38,10 +38,10 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
     gapi.load("client:auth2", initClient);
   });
   const onGoogleSuccess = (res: any) => {
-    console.log("success:", res.profileObj);
-    let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
-    newLoginMetadata.emailId = res.profileObj.email;
-    loginfunction(newLoginMetadata);
+    console.log("success:", res);
+    // let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
+    // newLoginMetadata.emailId = res.profileObj.email;
+    // loginfunction(newLoginMetadata);
   };
   const onGoogleFailure = (err: any) => {
     console.log("failed:", err);
@@ -81,13 +81,14 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
               onSubmit={(event) => {
                 event.preventDefault();
                 axios
-                  .post("http://localhost:5005/auth/login", {
+                  .post("http://localhost:5000/auth/login", {
                     email: email,
                     password: password,
                   })
-                  .then((res) => {
+                  .then((res: any) => {
                     alert("Login Successful");
                     console.log(res);
+                    loginfunction(res.data)
                   })
                   .catch((err) => {
                     console.log(err.response.data.error);
