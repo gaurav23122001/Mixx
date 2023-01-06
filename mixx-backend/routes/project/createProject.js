@@ -1,21 +1,29 @@
 const express = require('express');
 const verify = require('../../middleware/verify');
 const Project = require('../../models/project');
+const User = require('../../models/user');
 
 const projectRouter = express.Router();
 
-projectRouter.post('/create',  async (req, res) => {
-      const { name, description, audioURL, timeStampAndComment, user } = req.body;
+projectRouter.post('/create', async (req, res) => {
+      const { name, description, audioFormat, audioURL, timeStampAndComment, user } = req.body;
+      const userId = req.body.userId;
       console.log(req.body);
       const newProject = new Project({
             name,
             description,
+            audioFormat,
             audioURL,
             timeStampAndComment,
             user
       });
       await newProject.save()
-            .then(project => {
+            .then(async (project) => {
+                  await User.findOne({ _id: userId }).then(user => {
+                        console.log(user);
+                        user.savedProjects.push(project);
+                        user.save();
+                  })
                   res.status(200).json(project);
             })
             .catch(err => {

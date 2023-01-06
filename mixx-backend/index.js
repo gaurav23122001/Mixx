@@ -15,6 +15,7 @@ const authRouter = require('./routes/auth.js');
 const projectRouter = require('./routes/project/createProject.js');
 const { deleteProjectRouter } = require('./routes/project/deleteProject');
 const commentAndTimeRouter = require('./routes/project/addCommentAndTime');
+const getAllProjectsRouter = require('./routes/project/getAllProjects');
 
 app.use(cors({
     origin: 'http://localhost:8100',
@@ -26,12 +27,27 @@ app.use(express.json());
 app.post('/upload-url', async (req, res) => {
     const videoUrl = req.body.videoUrl;
     const audioFormat = req.body.audioFormat;
+    const userId = req.body.userId;
     try {
+        console.log(req.body);
         const videoPath = await downloadVideoFromUrl(videoUrl)
+        console.log(videoPath);
         const filePath = await extractAudioFromFile(videoPath.split('/').pop(), audioFormat)
+        console.log(filePath);
         const url = await uploadFileToBucket(filePath, audioFormat);
+
+        const project = new Project({
+            name: videoPath.split('/').pop(),
+            audioURL: url,
+            audioFormat: audioFormat,
+            userId: userId
+        })
+        await project.save();
+
+
         res.status(200).json(url)
     } catch (error) {
+        console.log(error);
         res.status(500).json('Try again! Something went wrong')
     }
 })
@@ -55,6 +71,7 @@ app.use('/auth', authRouter);
 app.use('/project', projectRouter);
 app.use('/project', deleteProjectRouter);
 app.use('/project', commentAndTimeRouter)
+app.use('/project', getAllProjectsRouter)
 
 
 if (process.env.NODE_ENV === 'development') {
