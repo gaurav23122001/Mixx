@@ -23,10 +23,12 @@ interface URLProps {
     loginMetadata: LoginMetadata;
     setShowPopover: (value: boolean) => void;
     showPopover: boolean;
+    videoUrl: string;
+    setShowURL: (value: boolean) => void;
+    setVideoUrl: (value: string) => void;
 }
-const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover, showPopover }) => {
-    const [videoUrl, setVideoUrl] = useState<string>('');
-    
+const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover, showPopover, videoUrl, setShowURL, setVideoUrl }) => {
+
     return (
         <IonPopover
             isOpen={showPopover}
@@ -35,7 +37,12 @@ const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover,
             }}
             class="urlPopover"
         >
-            <form>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                setShowURL(true);
+                setVideoUrl(videoUrl);
+                setShowPopover(false);
+            }}>
                 <IonGrid class="urlGrid">
                     <IonRow class="urlCloseWrapper">
                         <IonIcon
@@ -56,9 +63,10 @@ const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover,
                             required={true}
                             placeholder="Enter URL"
                             class="urlInput"
-                           value={videoUrl}
+                            type="url"
+                            value={videoUrl}
                             onIonChange={(e) => {
-                                setVideoUrl(e.detail.value!);
+                                videoUrl = e.detail.value ? e.detail.value : "";
                             }}
                         >
 
@@ -68,13 +76,6 @@ const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover,
                         <IonButton
                             class="urlSubmit"
                             type="submit"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if (videoUrl !== '') {
-                                    loginfunction(new LoginMetadata(videoUrl));
-                                    setShowPopover(false);
-                                }
-                            }}
                         >
                             Submit
                         </IonButton>
