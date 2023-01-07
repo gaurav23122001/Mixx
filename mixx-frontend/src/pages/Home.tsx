@@ -76,6 +76,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
         const formData = new FormData();
         formData.append("video", selectedFileUpload);
         formData.append("audioFormat", selectedFormat);
+        formData.append("userId", loginMetadata.id);
 
         setProgress({
             show: true,

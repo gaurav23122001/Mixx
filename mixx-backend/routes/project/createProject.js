@@ -11,7 +11,7 @@ projectRouter.post('/create', async (req, res) => {
       const newProject = new Project({
             name,
             description,
-            audioFormat, "creationTime": "2023-01-07T06:59:23.524Z",
+            audioFormat, 
             audioURL,
             timeStampAndComment,
             user

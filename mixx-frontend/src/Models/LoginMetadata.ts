@@ -4,7 +4,7 @@ export class LoginMetadata {
   public tokenString: string = "";
   public emailId: string = "";
   public name: string = "";
-  public id: number = -1;
+  public id: string = "";
   constructor(token: string) {
     this.tokenString = token;
   }
