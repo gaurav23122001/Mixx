@@ -79,12 +79,13 @@ const Register: React.FC<RegisterProps> = ({
               onSubmit={(e) => {
                 e.preventDefault();
                 axios
-                  .post("http://localhost:5005/auth/register", {
+                  .post("http://localhost:5000/auth/register", {
                     name: name,
                     email: email,
                     password: password,
                   })
                   .then((res) => {
+                    setShowRegister(false);
                     console.log(res);
                   })
                   .catch((err) => {
