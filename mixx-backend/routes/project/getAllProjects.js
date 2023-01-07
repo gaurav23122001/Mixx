@@ -7,7 +7,7 @@ const getAllProjectsRouter = express.Router();
 
 getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
       const { userId } = req.body;
-      // console.log(req.body);
+      console.log(req.body);
       await User.findOne({ _id: userId })
             .then(async user => {
                   console.log(user);
@@ -15,8 +15,9 @@ getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
                   console.log(userId);
                   let allUserProject = [];
                   let projectCount = 0;
-                  if (user.savedProjects.length === 0) {
-                        res.status(500).send("NO Projects");
+                  if (user.savedProjects.length == 0) {
+                        let noProjects = []
+                        res.status(200).send(noProjects);
                   }
                   await user.savedProjects.forEach(async project => {
                         await Project.findOne({
