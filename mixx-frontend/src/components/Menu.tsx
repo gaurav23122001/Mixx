@@ -50,7 +50,7 @@ const Menu: React.FC<MenuProps> = ({
     setSidebarOpen(!sidebarOpen);
   };
 
-  useEffect(() => {});
+  useEffect(() => { });
   return (
     <>
       <div className="side-img">
@@ -65,7 +65,7 @@ const Menu: React.FC<MenuProps> = ({
                 src={avatar}
                 alt=""
               />
-              {sidebarOpen && <div className="username">Ankit Gautam</div>}
+              {sidebarOpen && <div className="username">{loginMetadata.name}</div>}
             </IonCol>
             <IonCol
               class="arrowWrapper"

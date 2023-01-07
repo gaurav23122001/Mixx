@@ -34,6 +34,7 @@
   border-radius: 100%;
   border: 1px solid black;
 }
+
 .avatar-close {
   height: 40px;
   width: 40px;
@@ -137,6 +138,6 @@
 .username {
   display: flex;
   justify-content: center;
-  margin-top: 4px;
+  margin-top: 10px;
   font-size: 1.1rem;
 }
