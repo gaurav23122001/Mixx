@@ -8,18 +8,22 @@ const getAllProjectsRouter = express.Router();
 getAllProjectsRouter.get('/getAllProjects', async (req, res) => {
       const { userId } = req.body;
       // console.log(req.body);
-      await User.findOne({ _Id: userId })
+      await User.findOne({ _id: userId })
             .then(async user => {
+                  console.log(user);
                   // console.log(projects);
                   let allUserProject = [];
                   let projectCount = 0;
+                  if (user.savedProjects.length === 0) {
+                        res.status(500).send("NO Projects");
+                  }
                   await user.savedProjects.forEach(async project => {
                         await Project.findOne({
                               _id: project
                         }).then(projectObj => {
                               let currentTime = new Date();
                               let timeDifference = currentTime - projectObj.creationTime;
-                              let timeDifferenceInMinutes = timeDifference / 60000;
+                              let timeDifferenceInMinutes = (timeDifference / 60000)/24;
                               let newProjectObj = {
                                     "_id": projectObj._id,
                                     "name": projectObj.name,
