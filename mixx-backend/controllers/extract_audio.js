@@ -1,4 +1,5 @@
 const ffmpeg = require("fluent-ffmpeg");
+const avd = require("all-video-downloader");
 const fs = require('fs');
 const request = require('request');
 const getRandomId = require("../utils/file_id");
@@ -45,8 +46,9 @@ const extractAudioFromFile = (fileName, audioFormat) => {
 }
 
 const downloadVideoFromUrl = (videoUrl) => {
-    const videoExtention = videoUrl.split('.').pop();
-    const videoName = getRandomId() + '.' + videoExtention;
+    // console.log(videoUrl);
+    var videoExtention = videoUrl.split('.').pop();
+    var videoName = getRandomId() + '.' + videoExtention;
 
     return new Promise((resolve, reject) => {
         const downloadProcess = request(videoUrl)
@@ -59,6 +61,12 @@ const downloadVideoFromUrl = (videoUrl) => {
             reject(err);
         });
     });
+    // const info_with_option_urls = avd(
+    //     videoUrl,
+    // ).then((result) => {
+    //     console.log(result);
+    // });
+    // return "";
 }
 
 module.exports = { extractAudioFromFile, downloadVideoFromUrl };

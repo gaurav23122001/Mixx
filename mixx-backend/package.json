@@ -10,6 +10,7 @@
   "author": "localhost:404",
   "license": "ISC",
   "dependencies": {
+    "all-video-downloader": "^1.0.9",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -17,6 +18,7 @@
     "firebase-admin": "^11.4.1",
     "fluent-ffmpeg": "^2.1.2",
     "http": "^0.0.1-security",
+    "js-video-url-parser": "^0.5.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.2",
     "morgan": "^1.10.0",
