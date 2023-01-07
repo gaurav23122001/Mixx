@@ -32,7 +32,7 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction, sidebarOpen, 
   const logOut = () => {
     loginfunction(new LoginMetadata("-1"));
     StorageService.Logout();
-    window.location.reload();
+    // window.location.reload();
   };
 
   // const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -114,7 +114,7 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction, sidebarOpen, 
         </IonRow>
       </IonRow>
       <IonRow class="navBottom">
-        <GoogleLogout
+        {/* <GoogleLogout
           clientId={clientId}
           buttonText="Log out"
           onLogoutSuccess={logOut}
@@ -130,7 +130,17 @@ const Menu: React.FC<MenuProps> = ({ loginMetadata, loginfunction, sidebarOpen, 
               </div>
             </div>
           )}
-        />
+        /> */}
+        <div >
+          <div className="logout" onClick={logOut}>
+            <FiLogOut />
+            {sidebarOpen ?
+              <span>Logout</span>
+              :
+              null
+            }
+          </div>
+        </div>
 
       </IonRow>
     </nav>

@@ -29,19 +29,19 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
     "413463613463-mgrsltc9uf95ieghf1iqk0k7bgps5ul9.apps.googleusercontent.com";
   useEffect(() => {
     document.title = "Login - Mixx";
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: "",
-      });
-    };
-    gapi.load("client:auth2", initClient);
+    // const initClient = () => {
+    //   gapi.client.init({
+    //     clientId: clientId,
+    //     scope: "",
+    //   });
+    // };
+    // gapi.load("client:auth2", initClient);
   });
   const onGoogleSuccess = (res: any) => {
     console.log("success:", res);
-    // let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
-    // newLoginMetadata.emailId = res.profileObj.email;
-    // loginfunction(newLoginMetadata);
+    let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
+    newLoginMetadata.emailId = res.profileObj.email;
+    loginfunction(newLoginMetadata);
   };
   const onGoogleFailure = (err: any) => {
     console.log("failed:", err);
@@ -126,12 +126,12 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
               <input type="submit" value="LOG IN" />
             </form>
           </div>
-          <div className="divider">
+          {/* <div className="divider">
             <div className="left"></div>
             <div className="content">OR</div>
             <div className="right"></div>
-          </div>
-          <div className="social-login ion-text-center">
+          </div> */}
+          {/* <div className="social-login ion-text-center">
             <GoogleLogin
               clientId={clientId}
               render={(renderProps) => (
@@ -144,7 +144,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
               cookiePolicy={"single_host_origin"}
               isSignedIn={true}
             />
-          </div>
+          </div> */}
           <div className="footer">
             <div className="ion-text-center">
               Dont have an account?{" "}
