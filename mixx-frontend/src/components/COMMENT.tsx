@@ -1,6 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Redirect } from "react-router";
-
+import { BsTagFill } from "react-icons/bs";
+import { MdAddComment, MdKeyboardArrowDown } from "react-icons/md";
+import { AiFillClockCircle, AiFillPlusCircle } from "react-icons/ai";
 import "./Menu.css";
 import { GoogleLogout } from "react-google-login";
 import { LoginMetadata } from "../Models/LoginMetadata";
@@ -25,25 +27,25 @@ import {
 } from "@ionic/react";
 import "./URL.css";
 
-interface URLProps {
+interface COMMENTProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
   loginMetadata: LoginMetadata;
-  setShowPopover: (value: boolean) => void;
-  showPopover: boolean;
+  setCommentPopOver: (value: boolean) => void;
+  commentPopOver: boolean;
 }
-const URL: React.FC<URLProps> = ({
+const COMMENT: React.FC<COMMENTProps> = ({
   loginMetadata,
   loginfunction,
-  setShowPopover,
-  showPopover,
+  setCommentPopOver,
+  commentPopOver,
 }) => {
   const [videoUrl, setVideoUrl] = useState<string>("");
 
   return (
     <IonPopover
-      isOpen={showPopover}
+      isOpen={commentPopOver}
       onDidDismiss={() => {
-        setShowPopover(false);
+        setCommentPopOver(false);
       }}
       class="urlPopover"
     >
@@ -55,16 +57,16 @@ const URL: React.FC<URLProps> = ({
               class="iconSize"
               size="large"
               onClick={() => {
-                setShowPopover(false);
+                setCommentPopOver(false);
               }}
               className="urlClose"
             ></IonIcon>
           </IonRow>
-          <IonRow class="urlText">Add Files by URL</IonRow>
+          <IonRow class="urlText">Add Comment</IonRow>
           <IonRow class="urlInputWrapper">
             <IonInput
               required={true}
-              placeholder="Enter URL"
+              placeholder="Enter comment"
               class="urlInput"
               value={videoUrl}
               onIonChange={(e) => {
@@ -72,6 +74,26 @@ const URL: React.FC<URLProps> = ({
               }}
             ></IonInput>
           </IonRow>
+          <div className="badges">
+            <div className="badge">
+              <div>
+                <AiFillClockCircle />
+              </div>
+              <div>From</div>
+              <div>
+                <MdKeyboardArrowDown />
+              </div>
+            </div>
+            <div className="badge">
+              <div>
+                <AiFillClockCircle />
+              </div>
+              <div>To</div>
+              <div>
+                <MdKeyboardArrowDown />
+              </div>
+            </div>
+          </div>
           <IonRow>
             <IonButton
               class="urlSubmit"
@@ -80,11 +102,11 @@ const URL: React.FC<URLProps> = ({
                 e.preventDefault();
                 if (videoUrl !== "") {
                   loginfunction(new LoginMetadata(videoUrl));
-                  setShowPopover(false);
+                  setCommentPopOver(false);
                 }
               }}
             >
-              Submit
+              Add comment
             </IonButton>
           </IonRow>
         </IonGrid>
@@ -93,4 +115,4 @@ const URL: React.FC<URLProps> = ({
   );
 };
 
-export default URL;
+export default COMMENT;
