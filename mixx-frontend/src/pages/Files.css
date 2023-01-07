@@ -9,7 +9,6 @@
 
 .searchbarBorder {
   justify-content: center;
-
 }
 
 .spinLoad {
@@ -35,11 +34,11 @@
   --background: #575757;
   --border-radius: 25px;
   --color: white;
-  box-shadow: -4px -4px 36px rgb(0 0 0 / 20%), 4px 4px 36px rgb(0 0 0 / 20%), inset 0px 8px 36px rgb(0 0 0 / 16%);
-
+  box-shadow: -4px -4px 36px rgb(0 0 0 / 20%), 4px 4px 36px rgb(0 0 0 / 20%),
+    inset 0px 8px 36px rgb(0 0 0 / 16%);
 }
 
-@media (min-width:1300px) {
+@media (min-width: 1300px) {
   .searchBar1 {
     width: 70%;
   }
@@ -54,10 +53,10 @@
   width: 60%;
   --background: rgba(255, 255, 255, 0.5);
   border-radius: 25px;
-  --color:
-    #0744C6;
+  --color: #0744c6;
   font-weight: 700;
-  box-shadow: -4px -4px 36px rgb(0 0 0 / 20%), 4px 4px 36px rgb(0 0 0 / 20%), inset 0px 8px 36px rgb(0 0 0 / 16%);
+  box-shadow: -4px -4px 36px rgb(0 0 0 / 20%), 4px 4px 36px rgb(0 0 0 / 20%),
+    inset 0px 8px 36px rgb(0 0 0 / 16%);
 }
 
 .fileDetails {
@@ -71,4 +70,12 @@
   margin-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px dashed black;
+}
+
+.noproject {
+  color: white;
+  position: absolute;
+  top: 60vh;
+  font-weight: 700;
+  font-size: 2rem;
 }
