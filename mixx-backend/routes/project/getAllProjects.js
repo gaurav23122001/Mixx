@@ -23,7 +23,8 @@ getAllProjectsRouter.get('/getAllProjects', async (req, res) => {
                         }).then(projectObj => {
                               let currentTime = new Date();
                               let timeDifference = currentTime - projectObj.creationTime;
-                              let timeDifferenceInMinutes = (timeDifference / 60000)/24;
+                              console.log(timeDifference);
+                              let timeDifferenceInMinutes = (timeDifference / 60000) / (24 * 60);
                               let newProjectObj = {
                                     "_id": projectObj._id,
                                     "name": projectObj.name,
@@ -34,11 +35,11 @@ getAllProjectsRouter.get('/getAllProjects', async (req, res) => {
                                     "user": projectObj.user,
                                     "creationTime": projectObj.creationTime,
                                     "__v": projectObj.__v,
-                                    "timeDifferenceInMinutes":timeDifferenceInMinutes
+                                    "timeDifferenceInMinutes": timeDifferenceInMinutes
                               }
                               allUserProject.push(newProjectObj);
                               projectCount++;
-                              if(projectCount === user.savedProjects.length){
+                              if (projectCount === user.savedProjects.length) {
                                     console.log(newProjectObj);
                                     // console.log(timeDifferenceInMinutes);
                                     res.status(200).json(allUserProject);
@@ -46,12 +47,12 @@ getAllProjectsRouter.get('/getAllProjects', async (req, res) => {
                         })
                   })
             }
-      )
+            )
             .catch(err => {
                   console.log(err);
                   res.status(500).json({ error: err });
             }
-      );
+            );
 });
 
 
