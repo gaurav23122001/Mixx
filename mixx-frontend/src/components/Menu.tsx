@@ -65,6 +65,7 @@ const Menu: React.FC<MenuProps> = ({
                 src={avatar}
                 alt=""
               />
+              {sidebarOpen && <div className="username">Ankit Gautam</div>}
             </IonCol>
             <IonCol
               class="arrowWrapper"

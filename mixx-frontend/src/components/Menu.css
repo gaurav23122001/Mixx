@@ -133,3 +133,10 @@
   right: 5vw;
   top: 5vh;
 }
+
+.username {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+  font-size: 1.1rem;
+}
