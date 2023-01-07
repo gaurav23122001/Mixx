@@ -73,53 +73,90 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
 
     const uploadFileToServer = () => {
         if (!selectedFileUpload) {
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("video", selectedFileUpload);
-        formData.append("audioFormat", selectedFormat);
-        formData.append("userId", loginMetadata.id);
-
-        setProgress({
-            show: true,
-            value: 0,
-            progressMsg: "Uploading..."
-        })
-
-        axios.post(`${secrets.API_BASE_URL}/upload-file`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: (progressEvent: any) => {
-                let percent = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-                console.log(percent)
-                setProgress({
-                    show: true,
-                    value: percent,
-                    progressMsg: "Uploading..."
-                })
-                if (percent === 100) {
+            axios.post(`http://localhost:5000/upload-url`, {
+                videoUrl: videoUrl,
+                audioFormat: selectedFormat,
+                userId: loginMetadata.id
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                onUploadProgress: (progressEvent: any) => {
+                    let percent = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                    console.log(percent)
                     setProgress({
                         show: true,
-                        value: 0,
-                        progressMsg: "Converting...",
+                        value: percent,
+                        progressMsg: "Uploading..."
                     })
+                    if (percent === 100) {
+                        setProgress({
+                            show: true,
+                            value: 0,
+                            progressMsg: "Converting...",
+                        })
+                    }
                 }
+            }).then((res) => {
+                console.log(res);
+                setProgress({
+                    show: false,
+                    value: 0,
+                    progressMsg: "Uploading..."
+                })
+                setSelectedFileUpload(null);
             }
-        }).then((res) => {
-            console.log(res);
+            ).catch((err) => {
+                console.log(err);
+            }
+            );
+        }
+        else {
+            const formData = new FormData();
+            formData.append("video", selectedFileUpload);
+            formData.append("audioFormat", selectedFormat);
+            formData.append("userId", loginMetadata.id);
+
             setProgress({
-                show: false,
+                show: true,
                 value: 0,
                 progressMsg: "Uploading..."
             })
-            setSelectedFileUpload(null);
+
+            axios.post(`${secrets.API_BASE_URL}/upload-file`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                onUploadProgress: (progressEvent: any) => {
+                    let percent = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                    console.log(percent)
+                    setProgress({
+                        show: true,
+                        value: percent,
+                        progressMsg: "Uploading..."
+                    })
+                    if (percent === 100) {
+                        setProgress({
+                            show: true,
+                            value: 0,
+                            progressMsg: "Converting...",
+                        })
+                    }
+                }
+            }).then((res) => {
+                console.log(res);
+                setProgress({
+                    show: false,
+                    value: 0,
+                    progressMsg: "Uploading..."
+                })
+                setSelectedFileUpload(null);
+            }
+            ).catch((err) => {
+                console.log(err);
+            }
+            );
         }
-        ).catch((err) => {
-            console.log(err);
-        }
-        );
     }
 
 
