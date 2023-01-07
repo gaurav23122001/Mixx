@@ -1,7 +1,7 @@
 const express = require('express');
-const verify = require('../../middleware/verify');
 const Project = require('../../models/project');
 const User = require('../../models/user')
+
 
 const deleteProjectRouter = express.Router();
 

@@ -99,7 +99,7 @@ const Files: React.FC<FilesProps> = ({ loginfunction,
             <IonCardContent >
 
               <IonGrid style={{ color: "white", opacity: "0.5" }}>
-                {loading ? <IonSpinner name="crescent" class="spin" /> : null}
+                {loading ? <IonSpinner name="crescent" class="spinLoad" /> : null}
                 {files.map((file: FileData) => {
                   return (
                     <IonRow class="fileValue">

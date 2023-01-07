@@ -1,15 +1,31 @@
-const express = require('express');
-const app = express();
+
 const cors = require('cors');
 require('dotenv').config();
 const morgan = require("morgan");
 const upload = require('./middlewares/multer');
 const { extractAudioFromFile, downloadVideoFromUrl } = require('./controllers/extract_audio');
 const uploadFileToBucket = require('./controllers/storageBucket');
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
+const PORT = process.env.PORT || 5000;
+const express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io')(server, {
+        cors: {
+            origin: '*'
+        }
+    });
+server.listen(PORT, () => console.log("Server running at PORT " + PORT));
 const mongoose = require('mongoose');
+
+app.set('io', io);
+
+io.on('connection', (socket) => {
+    console.log('a user connected ' + socket.id);
+    socket.on('disconnect', () => {
+        console.log('user disconnected ' + socket.id);
+    });
+});
+
 
 const authRouter = require('./routes/auth.js');
 const projectRouter = require('./routes/project/createProject.js');
@@ -18,11 +34,18 @@ const commentAndTimeRouter = require('./routes/project/addCommentAndTime');
 const getAllProjectsRouter = require('./routes/project/getAllProjects');
 
 app.use(cors({
-    origin: 'http://localhost:8100',
+    origin: '*',
 }));
 app.use(express.json());
 
-
+mongoose.set("strictQuery", true);
+mongoose
+    .connect(process.env.CONNECTION_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log('DB connected'))
+    .catch((err) => console.log(err));
 
 app.post('/upload-url', async (req, res) => {
     const videoUrl = req.body.videoUrl;
@@ -53,7 +76,6 @@ app.post('/upload-url', async (req, res) => {
 })
 
 
-
 app.post('/upload-file', upload, async (req, res) => {
     // specify the output format here
     const audioFormat = req.body.audioFormat;
@@ -77,20 +99,3 @@ app.use('/project', getAllProjectsRouter)
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
-
-const PORT = process.env.PORT || 5000;
-
-mongoose.set("strictQuery", true);
-mongoose
-    .connect(process.env.CONNECTION_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() =>
-        server.listen(PORT, () => {
-            console.log(`Server running at http://localhost:${PORT}`);
-        })
-    )
-    .catch((err) => console.log(err));
-
-
