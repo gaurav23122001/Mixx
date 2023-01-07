@@ -38,6 +38,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
     const [dropDownAudio, setDropDownAudio] = useState(false);
     const [selectedFormat, setSelectedFormat] = useState("mp3");
     const [showPopover, setShowPopover] = useState(false);
+    const [showURL, setShowURL] = useState(false);
     const [selectedFileUpload, setSelectedFileUpload] = useState<File | null>(null);
     const supportedAudio = ["wav", "aac", "ogg", "mp3"];
     const [progress, setProgress] = useState({
@@ -46,6 +47,8 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
         progressMsg: "Uploading..."
     })
 
+    const [videoUrl, setVideoUrl] = useState<string>('');
+
 
     useEffect(() => {
         document.title = "Home - Mixx";
@@ -53,7 +56,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
             setScreen(false)
         }
     }, []);
-    
+
 
     const handleDropdownFile = () => {
         setDropDownFile(!dropDownFile);
@@ -90,11 +93,17 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
             },
             onUploadProgress: (progressEvent: any) => {
                 let percent = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-                if (percent < 100) {
+                console.log(percent)
+                setProgress({
+                    show: true,
+                    value: percent,
+                    progressMsg: "Uploading..."
+                })
+                if (percent === 100) {
                     setProgress({
                         show: true,
-                        value: percent,
-                        progressMsg: "Uploading..."
+                        value: 0,
+                        progressMsg: "Converting...",
                     })
                 }
             }
@@ -129,69 +138,93 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                 :
                 null
             }
-            <URL loginMetadata={loginMetadata} loginfunction={loginfunction} setShowPopover={setShowPopover} showPopover={showPopover} />
+            <URL loginMetadata={loginMetadata} loginfunction={loginfunction} setShowPopover={setShowPopover} showPopover={showPopover} videoUrl={videoUrl} setShowURL={setShowURL} setVideoUrl={setVideoUrl} />
             <form className="main" onSubmit={(e) => {
                 e.preventDefault();
             }}>
-                {!dropDownFile ? (
-                    <div className="select">
-                        <div>
-                            <AiFillFileAdd size="1.3em" />
-                        </div>
-                        <label htmlFor="video-upload" style={{ cursor: "pointer" }}>
-                            <input
-                                type="file"
-                                name="video"
-                                accept="video/*"
-                                id="video-upload"
-                                style={{ display: "none" }}
-                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                    setSelectedFileUpload(event.target.files?.[0] || null);
-                                }}
-                                required
-                            />
-                            Select Files</label>
-                        <div onMouseMove={() => { setDropDownFile(true) }} >
-                            <MdOutlineKeyboardArrowDown size="1.3em" />
-                        </div>
-                    </div>
-                ) : (
-                    <div className="dropdown" onMouseLeave={() => { setDropDownFile(false) }}>
-                        <div className="dropdown-top">
+
+                {selectedFileUpload ? <div className="select_file">
+                    <label htmlFor="video-upload" style={{ cursor: "pointer" }} title={selectedFileUpload.name}>
+                        <input
+                            type="file"
+                            name="video"
+                            accept="video/*"
+                            id="video-upload"
+                            style={{ display: "none" }}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                setSelectedFileUpload(event.target.files?.[0] || null);
+                            }}
+                            required
+                        />
+                        {selectedFileUpload.name.substring(0, 15)}{selectedFileUpload.name.charAt(15) ? "....." : null}</label>
+                </div> : showURL ?
+                    <div className="select_file">
+                        <label title={videoUrl}>
+                            {videoUrl.substring(0, 15)}{videoUrl.charAt(15) ? "....." : null}</label>
+                    </div> :
+                    !dropDownFile ? (
+                        <div className="select">
                             <div>
                                 <AiFillFileAdd size="1.3em" />
                             </div>
                             <label htmlFor="video-upload" style={{ cursor: "pointer" }}>
-                                <input type="file" accept="video/*" id="video-upload" style={{ display: "none" }} />
+                                <input
+                                    type="file"
+                                    name="video"
+                                    accept="video/*"
+                                    id="video-upload"
+                                    style={{ display: "none" }}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                        setSelectedFileUpload(event.target.files?.[0] || null);
+                                    }}
+                                    required
+                                />
                                 Select Files</label>
-                            <div>
-                                <MdKeyboardArrowUp size="1.3em" />
+                            <div onMouseMove={() => { setDropDownFile(true) }} >
+                                <MdOutlineKeyboardArrowDown size="1.3em" />
                             </div>
                         </div>
-                        <label
-                            htmlFor="video-upload"
-                            className="dropdown-list"
-                        >
-                            <div className="dropdown-icon">
-                                <AiOutlineCloudUpload size="1.3em" />
+                    ) : (
+                        <div className="dropdown" onMouseLeave={() => { setDropDownFile(false) }}>
+                            <div className="dropdown-top">
+                                <div>
+                                    <AiFillFileAdd size="1.3em" />
+                                </div>
+                                <label htmlFor="video-upload" style={{ cursor: "pointer" }}>
+                                    <input type="file" accept="video/*" id="video-upload" style={{ display: "none" }} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                        setSelectedFileUpload(event.target.files?.[0] || null);
+                                    }} required />
+                                    Select Files</label>
+                                <div>
+                                    <MdKeyboardArrowUp size="1.3em" />
+                                </div>
                             </div>
-                            <div style={{ cursor: "pointer" }}>
-                                <input type="file" accept="video/*" id="video-upload" style={{ display: "none" }} />
-                                From Device</div>
-                        </label>
-                        <div
-                            className="dropdown-list"
-                            onClick={() => {
-                                setShowPopover(true);
-                            }}
-                        >
-                            <div className="dropdown-icon">
-                                <AiOutlineLink size="1.3em" />
+                            <label
+                                htmlFor="video-upload"
+                                className="dropdown-list"
+                            >
+                                <div className="dropdown-icon">
+                                    <AiOutlineCloudUpload size="1.3em" />
+                                </div>
+                                <div style={{ cursor: "pointer" }}>
+                                    <input type="file" accept="video/*" id="video-upload" style={{ display: "none" }} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                        setSelectedFileUpload(event.target.files?.[0] || null);
+                                    }} required />
+                                    From Device</div>
+                            </label>
+                            <div
+                                className="dropdown-list"
+                                onClick={() => {
+                                    setShowPopover(true);
+                                }}
+                            >
+                                <div className="dropdown-icon">
+                                    <AiOutlineLink size="1.3em" />
+                                </div>
+                                <div>From URL</div>
                             </div>
-                            <div>From URL</div>
                         </div>
-                    </div>
-                )}
+                    )}
                 {!dropDownAudio ? (
                     <div className="select">
                         <div>
@@ -231,13 +264,14 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                             })}
                     </div>
                 )}
-                <label className="select convert" htmlFor="video-convert">
+                {progress.show == false ? <label className="select convert" htmlFor="video-convert">
                     <input onClick={uploadFileToServer} type="submit" id="video-convert" style={{ display: "none" }} />
                     <div>Convert</div>
                     <div style={{ marginTop: "5px", marginLeft: "10px" }}>
                         <AiOutlineSync size="1.3em" />
                     </div>
-                </label>
+                </label> : null}
+
                 {progress.show &&
                     <div className="progressWrapper">
                         <IonProgressBar value={progress.value * 0.01} class="progress">
