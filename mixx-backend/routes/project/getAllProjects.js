@@ -42,7 +42,7 @@ getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
                               if (projectCount === user.savedProjects.length) {
                                     console.log(newProjectObj);
                                     // console.log(timeDifferenceInMinutes);
-                                    allUserProject.sort((a, b) => {
+                                    allUserProject.sort((b, a) => {
                                           return b.timeDiffDays - a.timeDiffDays;
                                     })
                                     res.status(200).json(allUserProject);

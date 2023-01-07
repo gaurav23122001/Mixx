@@ -12,6 +12,14 @@
 
 }
 
+.spinLoad {
+  position: relative;
+  top: 30vh;
+  left: 28vw;
+  width: 100px;
+  height: 100px;
+}
+
 .searchBar1 {
   margin-bottom: 20px;
   margin-top: 20px;
