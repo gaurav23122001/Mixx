@@ -10,20 +10,21 @@ import { IonPage } from "@ionic/react";
 import Waveform from "./Waveform";
 import COMMENT from "../components/COMMENT";
 import TAG from "../components/TAG";
+import { FileData } from "../Models/File";
 // import Waveform from "./Waveform";
 
-const tracks = [
-  {
-    id: 0,
-    title: "Brahms: St Anthony Chorale - Theme, Two Pianos Op.56b",
-    url: "https://www.mfiles.co.uk/mp3-downloads/massenet-thais-meditation-violin-piano.mp3",
-  },
-  {
-    id: 1,
-    title: "Franz Schubert's Ständchen - Voice (Clarinet) & Piano",
-    url: "https://www.mfiles.co.uk/mp3-downloads/franz-schubert-standchen-serenade.mp3",
-  },
-];
+// const tracks = [
+//   {
+//     id: 0,
+//     title: "Brahms: St Anthony Chorale - Theme, Two Pianos Op.56b",
+//     url: "https://www.mfiles.co.uk/mp3-downloads/massenet-thais-meditation-violin-piano.mp3",
+//   },
+//   {
+//     id: 1,
+//     title: "Franz Schubert's Ständchen - Voice (Clarinet) & Piano",
+//     url: "https://www.mfiles.co.uk/mp3-downloads/franz-schubert-standchen-serenade.mp3",
+//   },
+// ];
 
 interface AudioProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -34,6 +35,7 @@ interface AudioProps {
   setMenu: (args: boolean) => void;
   setScreen: (args: boolean) => void;
   setSidebarOpen: (args: boolean) => void;
+  file: FileData;
 }
 
 const Audio: React.FC<AudioProps> = ({
@@ -45,8 +47,9 @@ const Audio: React.FC<AudioProps> = ({
   setMenu,
   screen,
   sidebarOpen,
+  file
 }) => {
-  const [selectedTrack, setSelectedTrack] = useState(tracks[0]);
+  const [selectedTrack, setSelectedTrack] = useState(file.audioURL);
   const [commentPopOver, setCommentPopOver] = useState(false);
   const [tagPopOver, setTagPopOver] = useState(false);
 
@@ -61,7 +64,7 @@ const Audio: React.FC<AudioProps> = ({
       />
       <div className="waveform-container">
         <div className="main ">
-          <Waveform url={selectedTrack.url} />
+          <Waveform url={selectedTrack} />
           {/* <PlayList
             tracks={tracks}
             selectedTrack={selectedTrack}

@@ -164,8 +164,8 @@ const Files: React.FC<FilesProps> = ({
                           {file.timeDiffDays == 0
                             ? "Today"
                             : file.timeDiffDays == 1
-                            ? "Yesterday"
-                            : file.timeDiffDays + " days ago"}
+                              ? "Yesterday"
+                              : file.timeDiffDays + " days ago"}
                         </IonCol>
                         <IonCol size="2">
                           <IonRow>

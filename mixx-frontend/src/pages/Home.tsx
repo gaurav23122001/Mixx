@@ -16,8 +16,9 @@ import { FaMusic } from "react-icons/fa";
 import { SetStateAction, useEffect, useState } from "react";
 import URL from "../components/URL";
 import { IonProgressBar } from "@ionic/react";
-
+import Play from "./Play";
 import menuImg from '../Assets/hamburger.svg'
+import { FileData } from "../Models/File";
 
 
 
@@ -39,6 +40,8 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
     const [selectedFormat, setSelectedFormat] = useState("mp3");
     const [showPopover, setShowPopover] = useState(false);
     const [showURL, setShowURL] = useState(false);
+    const [convert, setConvert] = useState(false);
+    const [file, setFile] = useState<FileData>(new FileData());
     const [selectedFileUpload, setSelectedFileUpload] = useState<File | null>(null);
     const supportedAudio = ["wav", "aac", "ogg", "mp3"];
     const [progress, setProgress] = useState({
@@ -98,6 +101,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                     }
                 }
             }).then((res) => {
+                setFile(res.data);
                 console.log(res);
                 setProgress({
                     show: false,
@@ -105,6 +109,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                     progressMsg: "Uploading..."
                 })
                 setSelectedFileUpload(null);
+                setConvert(true)
             }
             ).catch((err) => {
                 console.log(err);
@@ -145,12 +150,14 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                 }
             }).then((res) => {
                 console.log(res);
+                setFile(res.data);
                 setProgress({
                     show: false,
                     value: 0,
                     progressMsg: "Uploading..."
                 })
                 setSelectedFileUpload(null);
+                setConvert(true)
             }
             ).catch((err) => {
                 console.log(err);
@@ -159,7 +166,21 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
         }
     }
 
-
+    if (convert) {
+        return (
+            <Play
+                menu={menu}
+                setMenu={setMenu}
+                screen={screen}
+                setScreen={setScreen}
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+                loginfunction={loginfunction}
+                loginMetadata={loginMetadata}
+                file={file}
+            />
+        );
+    }
     return (
         <div className="container1">
             {screen ?
