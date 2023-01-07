@@ -8,6 +8,7 @@ const deleteProjectRouter = express.Router();
 
 const deleteProject = async (req, res) => {
       const { projectId, userId } = req.body;
+      console.log(userId);
       try {
             console.log(projectId)
             const project = await Project
