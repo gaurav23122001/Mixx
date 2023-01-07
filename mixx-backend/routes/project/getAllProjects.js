@@ -1,5 +1,5 @@
 const express = require('express');
-const verify = require('../../middleware/verify');
+const verify = require('../../middlewares/verify');
 const Project = require('../../models/project');
 const User = require('../../models/user');
 
