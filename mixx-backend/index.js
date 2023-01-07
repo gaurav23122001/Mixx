@@ -99,3 +99,11 @@ app.use('/project', getAllProjectsRouter)
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+
+
+
+app.get('/download', function (req, res) {
+    const file = `https://mixx-70ce9.appspot.com.storage.googleapis.com/Ghodey%20Pe%20Sawaar%20-%20Lyrics%20-%20Qala%20-%20Amit%20Trivedi_GeVUcFl.mp3?GoogleAccessId=firebase-adminsdk-y6yc6%40mixx-70ce9.iam.gserviceaccount.com&Expires=1673690056&Signature=f3vbYXUsZP010hvk5VGzkXlsyfS5PH8TuXM%2FUAUNVmqPAsKsXsjwzqVSAovKTL%2FHdU8u7kn3J1sx7bwE8XscgHw0zxf3whduLy%2BZGOd%2BhSxTIHpcJ99eEnRklbNO8%2BGMsN%2FnweoFQLZHzzDxNB%2F7U%2FlKbyuTaKOzNO5v5ZCRIpyYBey0g2hurOwbbaZZIChUS869rlZOJwB2DKMJ9p6dao9FFAUzkXULquh9Yfa8fZWKVY9225ziIJZ%2BwJLc6MphlkLYdT8hFH%2BX4X7lDosefOu1zzevlYXfdLIzYLZBYp9vW4kRiok8ywQx3fnGZPbTEWb5M%2BavviLph7SahDZPOw%3D%3D`;
+    console.log(file);
+    res.download(file); // Set disposition and send it.
+});
