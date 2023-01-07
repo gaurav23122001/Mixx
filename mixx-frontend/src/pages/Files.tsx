@@ -146,12 +146,12 @@ const Files: React.FC<FilesProps> = ({ loginfunction,
                         </IonCol>
                         <IonCol size="2">
                           <IonRow>
-                            <IonCol>
-                              <a href={file.audioURL} download target="_blank">
+                            <IonCol >
+                              <a href={file.audioURL} download target="_blank" className="download-icon">
                                 <AiOutlineCloudDownload size={20} />
                               </a>
                             </IonCol>
-                            <IonCol>
+                            <IonCol className="delete-icon">
 
                               <MdDeleteOutline size={20} onClick={() => {
                                 deleteFile(file._id)

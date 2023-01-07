@@ -20,6 +20,14 @@
   height: 100px;
 }
 
+.delete-icon {
+  cursor: pointer;
+}
+
+.download-icon {
+  color: white;
+}
+
 .searchBar1 {
   margin-bottom: 20px;
   margin-top: 20px;
