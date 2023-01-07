@@ -21,9 +21,9 @@ getAllProjectsRouter.get('/getAllProjects', async (req, res) => {
                         await Project.findOne({
                               _id: project
                         }).then(projectObj => {
-                              let currentTime = new Date();
+                              let currentTime = new Date().getTime();
                               let timeDifference = currentTime - projectObj.creationTime;
-                              let timeDifferenceInMinutes = (timeDifference / 60000)/24;
+                              let timeDifferenceInMinutes = (timeDifference / 60000) / (60 * 24);
                               let newProjectObj = {
                                     "_id": projectObj._id,
                                     "name": projectObj.name,
@@ -34,11 +34,11 @@ getAllProjectsRouter.get('/getAllProjects', async (req, res) => {
                                     "user": projectObj.user,
                                     "creationTime": projectObj.creationTime,
                                     "__v": projectObj.__v,
-                                    "timeDifferenceInMinutes":timeDifferenceInMinutes
+                                    "timeDiffDays": timeDifferenceInMinutes
                               }
                               allUserProject.push(newProjectObj);
                               projectCount++;
-                              if(projectCount === user.savedProjects.length){
+                              if (projectCount === user.savedProjects.length) {
                                     console.log(newProjectObj);
                                     // console.log(timeDifferenceInMinutes);
                                     res.status(200).json(allUserProject);
@@ -46,12 +46,12 @@ getAllProjectsRouter.get('/getAllProjects', async (req, res) => {
                         })
                   })
             }
-      )
+            )
             .catch(err => {
                   console.log(err);
                   res.status(500).json({ error: err });
             }
-      );
+            );
 });
 
 
