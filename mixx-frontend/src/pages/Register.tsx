@@ -42,7 +42,6 @@ const Register: React.FC<RegisterProps> = ({
     gapi.load("client:auth2", initClient);
   });
   const onGoogleSuccess = (res: any) => {
-    console.log("success:", res.profileObj);
     let newLoginMetadata: LoginMetadata = new LoginMetadata("-1");
     newLoginMetadata.emailId = res.profileObj.email;
     loginfunction(newLoginMetadata);

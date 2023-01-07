@@ -1,5 +1,4 @@
 const express = require('express');
-const verify = require('../../middlewares/verify');
 const Project = require('../../models/project');
 
 const projectRouter = express.Router();

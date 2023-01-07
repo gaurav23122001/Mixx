@@ -2,6 +2,7 @@ import Menu from "../components/Menu";
 import { LoginMetadata } from "../Models/LoginMetadata";
 import axios from 'axios';
 import secrets from '../secrets';
+import io, { Socket } from 'socket.io-client';
 
 import "./Home.css";
 import {
@@ -17,6 +18,8 @@ import URL from "../components/URL";
 import { IonProgressBar } from "@ionic/react";
 
 import menuImg from '../Assets/hamburger.svg'
+
+
 
 interface HomeProps {
     loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -35,16 +38,22 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
     const [dropDownAudio, setDropDownAudio] = useState(false);
     const [selectedFormat, setSelectedFormat] = useState("mp3");
     const [showPopover, setShowPopover] = useState(false);
-    const [selectedFileUpload, setSelectedFileUpload] = useState<any>({});
+    const [selectedFileUpload, setSelectedFileUpload] = useState<File | null>(null);
     const supportedAudio = ["wav", "aac", "ogg", "mp3"];
+    const [progress, setProgress] = useState({
+        show: false,
+        value: 0,
+        progressMsg: "Uploading..."
+    })
+
 
     useEffect(() => {
         document.title = "Home - Mixx";
         if (window.screen.width < 420) {
             setScreen(false)
         }
-        console.log(loginMetadata)
-    })
+    }, []);
+    
 
     const handleDropdownFile = () => {
         setDropDownFile(!dropDownFile);
@@ -57,27 +66,50 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
         setDropDownAudio(false);
     };
 
-    const handleFileUpload = (value: any) => {
-        setSelectedFileUpload(value[0]);
-        setDropDownFile(false);
-    };
-    const now = 50;
-    const uploadFileToServer = () => {
-        const formData = new FormData();
 
+
+    const uploadFileToServer = () => {
+        if (!selectedFileUpload) {
+            return;
+        }
+
+        const formData = new FormData();
         formData.append("video", selectedFileUpload);
         formData.append("audioFormat", selectedFormat);
+
+        setProgress({
+            show: true,
+            value: 0,
+            progressMsg: "Uploading..."
+        })
 
         axios.post(`${secrets.API_BASE_URL}/upload-file`, formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
+            onUploadProgress: (progressEvent: any) => {
+                let percent = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                if (percent < 100) {
+                    setProgress({
+                        show: true,
+                        value: percent,
+                        progressMsg: "Uploading..."
+                    })
+                }
+            }
         }).then((res) => {
             console.log(res);
-        }).catch((err) => {
+            setProgress({
+                show: false,
+                value: 0,
+                progressMsg: "Uploading..."
+            })
+            setSelectedFileUpload(null);
+        }
+        ).catch((err) => {
             console.log(err);
-        })
-        setSelectedFileUpload({});
+        }
+        );
     }
 
 
@@ -112,8 +144,8 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                                 accept="video/*"
                                 id="video-upload"
                                 style={{ display: "none" }}
-                                onChange={e => {
-                                    handleFileUpload(e.target.files)
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    setSelectedFileUpload(event.target.files?.[0] || null);
                                 }}
                                 required
                             />
@@ -187,6 +219,7 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                             .map((audio) => {
                                 return (
                                     <div
+                                        key={audio}
                                         onClick={() => handleAudioSelect(audio)}
                                         className="dropdown-list dropdown-list-audio"
                                         id={audio}
@@ -204,10 +237,12 @@ const Home: React.FC<HomeProps> = ({ loginfunction, loginMetadata, menu, setSide
                         <AiOutlineSync size="1.3em" />
                     </div>
                 </label>
-                <div className="progressWrapper">
-                    <IonProgressBar value={0.1} class="progress">
-                    </IonProgressBar><div className="progressValue">10%</div>
-                </div>
+                {progress.show &&
+                    <div className="progressWrapper">
+                        <IonProgressBar value={progress.value * 0.01} class="progress">
+                        </IonProgressBar><div className="progressValue">{`${progress.progressMsg} ${progress.value > 0 ? `${progress.value}%` : ''}`}</div>
+                    </div>
+                }
             </form>
         </div>
     );

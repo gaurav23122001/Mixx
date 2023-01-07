@@ -40,7 +40,6 @@ const App: React.FC = () => {
   let setLoginData = (resp: any) => {
     StorageService.Set("LoginMetadataKey", resp);
     setLoginMetadata(resp);
-    console.log("resp", resp)
   };
   useEffect(() => {
     setShowLoading(true);
@@ -48,7 +47,6 @@ const App: React.FC = () => {
       .then((resp) => {
         if (resp != null) {
           setLoginMetadata(resp);
-          console.log(resp);
         }
         setShowLoading(false);
       })

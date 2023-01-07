@@ -25,7 +25,8 @@ interface URLProps {
     showPopover: boolean;
 }
 const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover, showPopover }) => {
-
+    const [videoUrl, setVideoUrl] = useState<string>('');
+    
     return (
         <IonPopover
             isOpen={showPopover}
@@ -54,6 +55,11 @@ const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover,
                         <IonInput
                             required={true}
                             placeholder="Enter URL"
+                            class="urlInput"
+                           value={videoUrl}
+                            onIonChange={(e) => {
+                                setVideoUrl(e.detail.value!);
+                            }}
                         >
 
                         </IonInput>
@@ -62,7 +68,13 @@ const URL: React.FC<URLProps> = ({ loginMetadata, loginfunction, setShowPopover,
                         <IonButton
                             class="urlSubmit"
                             type="submit"
-
+                            onClick={(e) => {
+                                e.preventDefault();
+                                if (videoUrl !== '') {
+                                    loginfunction(new LoginMetadata(videoUrl));
+                                    setShowPopover(false);
+                                }
+                            }}
                         >
                             Submit
                         </IonButton>
