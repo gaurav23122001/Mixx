@@ -45,6 +45,29 @@ const Files: React.FC<FilesProps> = ({ loginfunction,
       });
   }
 
+  function nextChar(c: string) {
+    return String.fromCharCode(
+      c.charCodeAt(0) - "A".charCodeAt(0) + "a".charCodeAt(0)
+    );
+  }
+
+  const lowerCase = (input: string) => {
+    // console.log(input);
+
+    var temp: string[] = [];
+    if (input != null && input != undefined) {
+      {
+        temp = input.split("");
+        for (var i = 0; i < temp.length; i++) {
+          if (input[i] >= "A" && input[i] <= "Z") {
+            temp[i] = nextChar(temp[i]);
+          }
+        }
+      }
+    }
+    return input ? temp.join('') : "";
+  };
+
   const getData = async () => {
     isLoading(true);
     await axios
@@ -101,32 +124,44 @@ const Files: React.FC<FilesProps> = ({ loginfunction,
               <IonGrid style={{ color: "white", opacity: "0.5" }}>
                 {loading ? <IonSpinner name="crescent" class="spinLoad" /> : null}
                 {files.map((file: FileData) => {
-                  return (
-                    <IonRow class="fileValue">
-
-                      <IonCol size="6" class="ion-text-start">
-                        &nbsp;&nbsp;&nbsp;{file.name}
-                      </IonCol>
-                      <IonCol size="2" class="ion-text-center">
-                        {file.audioFormat}
-                      </IonCol>
-                      <IonCol size="2">
-                        {file.timeDiffDays == 0 ? "Today" : file.timeDiffDays == 1 ? "Yesterday" : file.timeDiffDays + " days ago"}
-                      </IonCol>
-                      <IonCol size="2">
-                        <IonRow>
-                          <IonCol>
-                            <AiOutlineCloudDownload size={20} />
-                          </IonCol>
-                          <IonCol>
-                            <MdDeleteOutline size={20} onClick={() => {
-                              deleteFile(file._id)
-                            }} />
-                          </IonCol>
-                        </IonRow>
-                      </IonCol>
-                    </IonRow>
+                  if (
+                    lowerCase(
+                      file.name
+                    ).includes(lowerCase(searchText)) ||
+                    lowerCase(file.audioFormat).includes(
+                      lowerCase(searchText)
+                    )
                   )
+                    return (
+                      <IonRow class="fileValue">
+
+                        <IonCol size="6" class="ion-text-start">
+                          &nbsp;&nbsp;&nbsp;{file.name}
+                        </IonCol>
+                        <IonCol size="2" class="ion-text-center">
+                          {file.audioFormat}
+                        </IonCol>
+                        <IonCol size="2">
+                          {file.timeDiffDays == 0 ? "Today" : file.timeDiffDays == 1 ? "Yesterday" : file.timeDiffDays + " days ago"}
+                        </IonCol>
+                        <IonCol size="2">
+                          <IonRow>
+                            <IonCol>
+                              <a href={file.audioURL} download target="_blank">
+                                <AiOutlineCloudDownload size={20} />
+                              </a>
+                            </IonCol>
+                            <IonCol>
+
+                              <MdDeleteOutline size={20} onClick={() => {
+                                deleteFile(file._id)
+                              }} />
+
+                            </IonCol>
+                          </IonRow>
+                        </IonCol>
+                      </IonRow>
+                    )
                 })}
 
               </IonGrid>
