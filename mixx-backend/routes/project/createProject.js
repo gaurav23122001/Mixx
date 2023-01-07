@@ -12,7 +12,7 @@ projectRouter.post('/create', async (req, res) => {
       const newProject = new Project({
             name,
             description,
-            audioFormat,
+            audioFormat, "creationTime": "2023-01-07T06:59:23.524Z",
             audioURL,
             timeStampAndComment,
             user
@@ -20,7 +20,7 @@ projectRouter.post('/create', async (req, res) => {
       await newProject.save()
             .then(async (project) => {
                   await User.findOne({ _id: userId }).then(user => {
-                        console.log(user);
+                        // console.log(user);
                         user.savedProjects.push(project);
                         user.save();
                   })
