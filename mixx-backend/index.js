@@ -57,6 +57,7 @@ app.post('/upload-url', async (req, res) => {
         console.log(req.body);
         const videoPath = await downloadVideoFromUrl(videoUrl)
         console.log(videoPath);
+        console.log(videoPath.split('/').pop());
         const filePath = await extractAudioFromFile(videoPath.split('/').pop(), audioFormat)
         console.log(filePath);
         const url = await uploadFileToBucket(filePath, audioFormat);
@@ -80,7 +81,7 @@ app.post('/upload-url', async (req, res) => {
             });
     } catch (error) {
         console.log(error);
-        res.status(500).json('Try again! Something went wrong')
+        res.status(500).json('The URL Format is not supported!')
     }
 })
 
@@ -91,6 +92,7 @@ app.post('/upload-file', upload, async (req, res) => {
 
     try {
         const name = req.file.filename
+        console.log(req.file.filename);
         const filePath = await extractAudioFromFile(req.file.filename, audioFormat)
         const url = await uploadFileToBucket(filePath, audioFormat);
         const userId = req.body.userId;
