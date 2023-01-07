@@ -18,11 +18,10 @@ const Page: React.FC<PageProps> = ({ loginfunction, loginMetadata }) => {
   const [menu, setMenu] = useState(false)
 
   useEffect(() => {
-    document.title = "Home - Mixx";
     if (window.screen.width < 420) {
       setScreen(false)
     }
-  })
+  }, [])
 
   if (name === "home") {
     return <Home menu={menu} setMenu={setMenu} screen={screen} setScreen={setScreen} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginfunction={loginfunction} loginMetadata={loginMetadata} />;

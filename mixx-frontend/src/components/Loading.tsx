@@ -1,9 +1,9 @@
 import { IonSpinner } from "@ionic/react";
 
-interface ContainerProps {}
+interface ContainerProps { }
 
 const Loading: React.FC<ContainerProps> = () => {
-  return <IonSpinner name="lines" class="spin" />;
+  return <IonSpinner name="crescent" class="spin" />;
 };
 
 export default Loading;

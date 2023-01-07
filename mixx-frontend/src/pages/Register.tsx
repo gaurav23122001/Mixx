@@ -135,7 +135,7 @@ const Register: React.FC<RegisterProps> = ({
               <input type="submit" value="SIGN UP" />
             </form>
           </div>
-          <div className="divider">
+          {/* <div className="divider">
             <div className="left"></div>
             <div className="content">OR</div>
             <div className="right"></div>
@@ -153,7 +153,7 @@ const Register: React.FC<RegisterProps> = ({
               cookiePolicy={"single_host_origin"}
               isSignedIn={true}
             />
-          </div>
+          </div> */}
           <div className="footer">
             <div className="ion-text-center">
               Allready have an account?{" "}

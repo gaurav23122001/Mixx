@@ -81,12 +81,14 @@
   color: #fff;
   font-weight: bold;
 }
+
 .register .right-box .line {
   height: 3px;
   width: 65px;
   background-color: #fff;
   margin-left: 92px;
   margin-top: 1px;
+  margin-bottom: 20px;
 }
 
 .register .form {
@@ -128,8 +130,8 @@
   color: #fff;
 }
 
-.register .form .inputBox input:focus ~ label,
-.register .form .inputBox input:valid ~ label {
+.register .form .inputBox input:focus~label,
+.register .form .inputBox input:valid~label {
   top: -20px;
   left: 0;
   color: #fff;
@@ -161,6 +163,7 @@
   width: 100px;
   background-color: #e7e7e7;
 }
+
 .register .divider .right {
   height: 1px;
   width: 100px;
@@ -194,6 +197,7 @@
   font-size: 0.75rem;
   margin-bottom: 10px;
 }
+
 .register .footer span {
   color: #fff;
   font-weight: bold;
@@ -204,11 +208,13 @@
   .register .box {
     flex-direction: column;
   }
+
   .register .left-box {
     border-top-left-radius: 30px;
     border-bottom-left-radius: 0px;
     border-top-right-radius: 30px;
   }
+
   .register .footer {
     margin-bottom: 20px;
   }
