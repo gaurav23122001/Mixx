@@ -3,6 +3,8 @@ const cors = require('cors');
 require('dotenv').config();
 const morgan = require("morgan");
 const upload = require('./middlewares/multer');
+const Project = require('./models/project');
+const User = require('./models/user');
 const { extractAudioFromFile, downloadVideoFromUrl } = require('./controllers/extract_audio');
 const uploadFileToBucket = require('./controllers/storageBucket');
 const PORT = process.env.PORT || 5000;
@@ -59,16 +61,23 @@ app.post('/upload-url', async (req, res) => {
         console.log(filePath);
         const url = await uploadFileToBucket(filePath, audioFormat);
 
-        const project = new Project({
+        const newProject = new Project({
             name: videoPath.split('/').pop(),
             audioURL: url,
             audioFormat: audioFormat,
-            userId: userId
+            user: userId
         })
-        await project.save();
-
-
-        res.status(200).json(url)
+        await newProject.save().then(async (project) => {
+            await User.findOne({ _id: userId }).then(user => {
+                user.savedProjects.push(project);
+                user.save();
+            })
+            res.status(200).json(project);
+        })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({ error: err });
+            });
     } catch (error) {
         console.log(error);
         res.status(500).json('Try again! Something went wrong')
@@ -81,9 +90,29 @@ app.post('/upload-file', upload, async (req, res) => {
     const audioFormat = req.body.audioFormat;
 
     try {
+        const name = req.file.filename
         const filePath = await extractAudioFromFile(req.file.filename, audioFormat)
         const url = await uploadFileToBucket(filePath, audioFormat);
-        res.status(200).json(url)
+        const userId = req.body.userId;
+        const newProject = new Project({
+            name,
+            audioFormat,
+            audioURL: url,
+            user: userId
+        });
+        await newProject.save()
+            .then(async (project) => {
+                await User.findOne({ _id: userId }).then(user => {
+                    // console.log(user);
+                    user.savedProjects.push(project);
+                    user.save();
+                })
+                res.status(200).json(project);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({ error: err });
+            });
     } catch (error) {
         res.status(500).json(error + " error index file")
     }
@@ -102,8 +131,3 @@ if (process.env.NODE_ENV === 'development') {
 
 
 
-app.get('/download', function (req, res) {
-    const file = `https://mixx-70ce9.appspot.com.storage.googleapis.com/Ghodey%20Pe%20Sawaar%20-%20Lyrics%20-%20Qala%20-%20Amit%20Trivedi_GeVUcFl.mp3?GoogleAccessId=firebase-adminsdk-y6yc6%40mixx-70ce9.iam.gserviceaccount.com&Expires=1673690056&Signature=f3vbYXUsZP010hvk5VGzkXlsyfS5PH8TuXM%2FUAUNVmqPAsKsXsjwzqVSAovKTL%2FHdU8u7kn3J1sx7bwE8XscgHw0zxf3whduLy%2BZGOd%2BhSxTIHpcJ99eEnRklbNO8%2BGMsN%2FnweoFQLZHzzDxNB%2F7U%2FlKbyuTaKOzNO5v5ZCRIpyYBey0g2hurOwbbaZZIChUS869rlZOJwB2DKMJ9p6dao9FFAUzkXULquh9Yfa8fZWKVY9225ziIJZ%2BwJLc6MphlkLYdT8hFH%2BX4X7lDosefOu1zzevlYXfdLIzYLZBYp9vW4kRiok8ywQx3fnGZPbTEWb5M%2BavviLph7SahDZPOw%3D%3D`;
-    console.log(file);
-    res.download(file); // Set disposition and send it.
-});
