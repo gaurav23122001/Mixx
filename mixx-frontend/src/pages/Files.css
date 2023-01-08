@@ -66,6 +66,12 @@
   min-height: 75vh;
 }
 
+.noFile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .fileValue {
   margin-top: 10px;
   padding-bottom: 10px;
@@ -74,7 +80,6 @@
 
 .noproject {
   color: white;
-  position: absolute;
   top: 60vh;
   font-weight: 700;
   font-size: 2rem;
