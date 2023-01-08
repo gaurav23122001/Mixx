@@ -49,7 +49,7 @@ const Audio: React.FC<AudioProps> = ({
   setMenu,
   screen,
   sidebarOpen,
-  file
+  file,
 }) => {
   const [selectedTrack, setSelectedTrack] = useState(file.audioURL);
   const [commentPopOver, setCommentPopOver] = useState(false);
@@ -111,6 +111,7 @@ const Audio: React.FC<AudioProps> = ({
             </div>
           </div>
           <div className="info"></div>
+          <div className="view-button">View All</div>
         </div>
         <div className="comments">
           <div className="header">
@@ -139,6 +140,7 @@ const Audio: React.FC<AudioProps> = ({
             </div>
           </div>
           <div className="info"></div>
+          <div className="view-button">View All</div>
         </div>
       </div>
     </IonPage>

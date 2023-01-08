@@ -103,3 +103,15 @@ button:hover {
   font-size: 0.8rem;
   border-radius: 10px;
 }
+
+.view-button {
+  float: right;
+  color: white;
+  background-color: #0744c6;
+  margin-top: 7px;
+  padding: 5px;
+  border-radius: 7px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
