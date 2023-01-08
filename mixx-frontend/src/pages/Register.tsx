@@ -102,18 +102,20 @@ const Register: React.FC<RegisterProps> = ({
                   onChange={(e) => {
                     name = e.target.value;
                   }}
+                  placeholder=" "
                 />
                 <label htmlFor="name">Name</label>
               </div>
               <div className="inputBox">
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   name="email"
                   required
                   onChange={(e) => {
                     email = e.target.value;
                   }}
+                  placeholder=" "
                 />
                 <label htmlFor="email">Email Address</label>
               </div>
@@ -126,6 +128,7 @@ const Register: React.FC<RegisterProps> = ({
                     password = e.target.value;
                   }}
                   required
+                  placeholder=" "
                 />
                 <label htmlFor="password">Password</label>
                 <div className="eye-icon" onClick={handlePassword}>

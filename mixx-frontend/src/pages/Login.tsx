@@ -78,7 +78,6 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
           </div>
           <div className="form">
             <form
-              autoComplete="off"
               onSubmit={(event) => {
                 event.preventDefault();
                 axios
@@ -99,13 +98,14 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
             >
               <div className="inputBox">
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   name="email"
                   onChange={(e) => {
                     email = e.target.value;
                   }}
                   required
+                  placeholder=" "
                 />
                 <label htmlFor="email">Email Address</label>
               </div>
@@ -118,6 +118,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
                     password = e.target.value;
                   }}
                   required
+                  placeholder=" "
                 />
                 <label htmlFor="password">Password</label>
                 <div className="eye-icon" onClick={handlePassword}>

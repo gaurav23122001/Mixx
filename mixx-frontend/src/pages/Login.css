@@ -133,7 +133,7 @@
 }
 
 .login .form .inputBox input:focus ~ label,
-.login .form .inputBox input:valid ~ label {
+.login .form .inputBox input:not(:placeholder-shown) ~ label {
   top: -20px;
   left: 0;
   color: #fff;
