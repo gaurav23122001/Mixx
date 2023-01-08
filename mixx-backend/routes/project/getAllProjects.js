@@ -7,11 +7,11 @@ const getAllProjectsRouter = express.Router();
 
 getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
       const { userId } = req.body;
-      console.log(req.body);
+      // console.log(req.body);
       await User.findOne({ _id: userId })
             .then(async user => {
-                  console.log(user);
-                  console.log(userId);
+                  // console.log(user);
+                  // console.log(userId);
                   let allUserProject = [];
                   let projectCount = 0;
                   if (user.savedProjects.length == 0) {
@@ -22,7 +22,7 @@ getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
                         await Project.findOne({
                               _id: project
                         }).then(projectObj => {
-                              console.log(projectObj);
+                              // console.log(projectObj);
                               if (projectObj) {
 
                                     let currentTime = new Date().getTime();
@@ -45,8 +45,11 @@ getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
                               projectCount++;
                               if (projectCount === user.savedProjects.length) {
                                     // console.log(timeDifferenceInMinutes);
-                                    allUserProject.sort((b, a) => {
-                                          return b.timeDiffDays - a.timeDiffDays;
+                                    allUserProject.sort((a, b) => {
+                                          let currentTime = new Date().getTime();
+                                          let aTime = currentTime - a.creationTime;
+                                          let bTime = currentTime - b.creationTime;
+                                          return aTime - bTime;
                                     })
                                     res.status(200).json(allUserProject);
                               }
