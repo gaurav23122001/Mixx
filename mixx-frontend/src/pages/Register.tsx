@@ -57,10 +57,11 @@ const Register: React.FC<RegisterProps> = ({
           <div className="title">Welcome Note</div>
           <div className="title-underline"></div>
           <div className="content">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-            laboriosam aperiam ex quos, non repellendus molestias quasi quis
-            sint debitis impedit maiores culpa aliquam minima dolores esse. Vero
-            dicta laborum voluptate nobis quia tempora aperiam id distinctio
+            Mixx is a web application that allows users to convert online videos
+            to audio and add tags or comments to specific timestamps. Mixx
+            supports a variety of audio and video formats, making it a
+            convenient and versatile tool. To start using Mixx, simply launch
+            the application, login and start coverting !!
           </div>
           <div className="image-box">
             <img src={symbol} alt="" className="music-symbol" />
