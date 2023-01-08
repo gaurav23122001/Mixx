@@ -175,7 +175,7 @@ const Files: React.FC<FilesProps> = ({
                   )
                     return (
                       <IonRow class="fileValue">
-                        <IonCol size="6" class="ion-text-start" onClick={() => {
+                        <IonCol size="6" class="ion-text-start" style={{ cursor: "pointer" }} onClick={() => {
                           setFile(file)
                           setConvert(true)
                         }}>
