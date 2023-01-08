@@ -34,7 +34,7 @@ const formWaveSurferOptions = (ref) => ({
   ],
 });
 
-export default function Waveform({ url }) {
+export default function Waveform({ url, setMaxLength }) {
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
   const [playing, setPlay] = useState(false);
@@ -58,12 +58,33 @@ export default function Waveform({ url }) {
         setVolume(volume);
       }
     });
-
+    setMaxLength(wavesurfer.current.getDuration());
     // Removes events, elements and disconnects Web Audio nodes.
     // when component unmount
     return () => wavesurfer.current.destroy();
+
+
   }, [url]);
 
+  useEffect(() => {
+    const timeOut = setInterval(() => {
+      console.log(wavesurfer.current.getCurrentTime());
+    }, 1000);
+    // const timeOut = setTimeout(wavesurfer.current.getCurrentTime(), 1000);
+    // // console.log(timeOut)
+    // startTimer();
+  }, [])
+  var timer;
+
+
+  // const startTimer = () => {
+  //   timer = setInterval(function () {
+  //     getCurrentTime();
+  //   }, 1000);
+  // }
+  const getCurrentTime = () => {
+    return wavesurfer.current.getCurrentTime();
+  }
   const handlePlayPause = () => {
     setPlay(!playing);
     wavesurfer.current.playPause();
@@ -86,17 +107,19 @@ export default function Waveform({ url }) {
 
   return (
     <div>
-      <div className="download-button">
-        <BiDownArrowAlt size="2em" />
-      </div>
+      <a href={url} download rel="noreferrer" target="_blank">
+        <div className="download-button">
+          <BiDownArrowAlt size="2em" />
+        </div>
+      </a>
       <div id="waveform" ref={waveformRef}></div>
       <div id="waveform-timeline"></div>
       <div className="controls">
         <div onClick={handlePlayPause}>
-          {!playing ? <FaPlay size="1.5em" /> : <FaPause size="1.5em" />}
+          {!playing ? <FaPlay size="1.5em" style={{ cursor: "pointer" }} /> : <FaPause size="1.5em" style={{ cursor: "pointer" }} />}
         </div>
         <div onClick={handleStop} style={{ marginLeft: "10px" }}>
-          <BsFillStopCircleFill size="1.5em" />
+          <BsFillStopCircleFill size="1.5em" style={{ cursor: "pointer" }} />
         </div>
         {/* <label htmlFor="volume">Volume</label> */}
       </div>

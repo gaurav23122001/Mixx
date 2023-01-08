@@ -19,6 +19,7 @@ import Login from "../pages/Login";
 import { close } from "ionicons/icons";
 import {
   IonButton,
+  IonCol,
   IonGrid,
   IonIcon,
   IonInput,
@@ -26,20 +27,30 @@ import {
   IonRow,
 } from "@ionic/react";
 import "./URL.css";
+import axios from "axios";
+import { FileData } from "../Models/File";
 
 interface TAGProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
   loginMetadata: LoginMetadata;
   setTagPopOver: (value: boolean) => void;
   tagPopOver: boolean;
+  maxLength: number;
+  file: FileData;
 }
 const URL: React.FC<TAGProps> = ({
   loginMetadata,
   loginfunction,
   setTagPopOver,
   tagPopOver,
+  maxLength,
+  file,
 }) => {
-  const [videoUrl, setVideoUrl] = useState<string>("");
+  // const [videoUrl, setVideoUrl] = useState<string>("");
+  var videoUrl: string;
+  var start_time: number;
+  var end_time: number;
+  // const [end_time, setEndTime] = useState<number>(0);
 
   return (
     <IonPopover
@@ -49,7 +60,19 @@ const URL: React.FC<TAGProps> = ({
       }}
       class="urlPopover"
     >
-      <form>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        axios.post("http://localhost:5000/project/addCTT", {
+          projectId: file._id,
+          userId: loginMetadata.id,
+          timeStampStart: start_time,
+          timeStampEnd: end_time,
+          tags: videoUrl,
+        }).then((res: any) => {
+          console.log(res);
+        })
+        setTagPopOver(false);
+      }}>
         <IonGrid class="urlGrid">
           <IonRow class="urlCloseWrapper">
             <IonIcon
@@ -63,55 +86,105 @@ const URL: React.FC<TAGProps> = ({
             ></IonIcon>
           </IonRow>
           <IonRow class="urlText">Add tag</IonRow>
-          <IonRow class="urlInputWrapper">
-            <IonInput
-              required={true}
-              placeholder="Enter tag"
-              class="urlInput"
-              value={videoUrl}
-              onIonChange={(e) => {
-                setVideoUrl(e.detail.value!);
-              }}
-            ></IonInput>
-          </IonRow>
-          <div className="badges">
-            <div className="badge">
-              <div>
-                <AiFillClockCircle />
-              </div>
-              <div>From</div>
-              <div>
-                <MdKeyboardArrowDown />
-              </div>
-            </div>
-            <div className="badge">
-              <div>
-                <AiFillClockCircle />
-              </div>
-              <div>To</div>
-              <div>
-                <MdKeyboardArrowDown />
-              </div>
+          <div style={{ display: "flex", flexDirection: "column", height: "7vh" }}>
+            <IonRow class="urlInputWrapper">
+              <IonInput
+                required={true}
+                placeholder="Enter tag"
+                class="urlInput"
+                value={videoUrl}
+                onIonChange={(e) => {
+                  videoUrl = e.detail.value ? e.detail.value : "";
+                }}
+              ></IonInput>
+            </IonRow>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <span style={{ position: "relative", bottom: "50px", backgroundColor: "#0744C6", color: "white", borderRadius: "10px 0px 0px 10px" }}>
+                <IonRow style={{ width: "80px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  <IonInput
+                    required={true}
+                    class="numberInput"
+                    value={start_time}
+                    type="number"
+                    placeholder="00"
+                    // min={0}
+                    // max={maxLength}
+                    onIonChange={(e) => {
+                      start_time = parseInt(e.detail.value);
+                    }}
+                  ></IonInput>
+                  {/* <IonCol>
+                    &nbsp;&nbsp;&nbsp; :
+                  </IonCol>
+                  <IonCol>
+                    <IonInput
+                      required={true}
+                      class="numberInput"
+                      value={start_time_sec}
+                      placeholder="00"
+                      type="text"
+                      maxlength={2}
+                      onIonChange={(e) => {
+                        if (e.detail.value <= "59") {
+                          setStartTimeSec(e.detail.value);
+                        }
+
+
+                      }}
+                    ></IonInput> */}
+                </IonRow>
+              </span>
+              <span style={{ position: "relative", bottom: "50px", display: "flex", alignItems: "center", backgroundColor: "#0744C6", color: "white" }}>to</span>
+              <span style={{ position: "relative", bottom: "50px", backgroundColor: "#0744C6", color: "white", borderRadius: "0px 10px 10px 0px" }}>
+                <IonRow style={{ width: "80px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  <IonCol>
+                    <IonInput
+                      required={true}
+                      class="numberInput"
+                      value={end_time}
+                      type="number"
+                      placeholder="00"
+                      // min={0}
+                      onIonChange={(e) => {
+                        end_time = parseInt(e.detail.value);
+                      }}
+                    // max={maxLength}
+                    ></IonInput>
+                  </IonCol>
+                  {/* <IonCol>
+                    &nbsp;&nbsp;&nbsp; :
+                  </IonCol>
+                  <IonCol>
+                    <IonInput
+                      required={true}
+                      class="numberInput"
+                      value={start_time_sec}
+                      placeholder="00"
+                      type="text"
+                      maxlength={2}
+                      onIonChange={(e) => {
+                        if (e.detail.value <= "59") {
+                          setStartTimeSec(e.detail.value);
+                        }
+
+
+                      }}
+                    ></IonInput> */}
+                </IonRow>
+              </span>
             </div>
           </div>
           <IonRow>
             <IonButton
               class="urlSubmit"
               type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                if (videoUrl !== "") {
-                  loginfunction(new LoginMetadata(videoUrl));
-                  setTagPopOver(false);
-                }
-              }}
             >
               Add tag
             </IonButton>
           </IonRow>
         </IonGrid>
       </form>
-    </IonPopover>
+    </IonPopover >
   );
 };
 
