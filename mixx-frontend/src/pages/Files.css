@@ -12,9 +12,6 @@
 }
 
 .spinLoad {
-  position: relative;
-  top: 30vh;
-  left: 28vw;
   width: 100px;
   height: 100px;
 }
