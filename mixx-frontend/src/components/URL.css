@@ -17,6 +17,7 @@ ion-popover.urlPopover::part(content) {
 }
 
 .urlClose {
+  cursor: pointer;
   color: #0744c6;
   margin-right: 5px;
   margin-top: 5px;

@@ -2,7 +2,7 @@ import Menu from "../components/Menu";
 import { LoginMetadata } from "../Models/LoginMetadata";
 import "./Play.css";
 import PlayList from "./PlayList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsTagFill } from "react-icons/bs";
 import { MdAddComment, MdKeyboardArrowDown } from "react-icons/md";
 import { AiFillClockCircle, AiFillPlusCircle } from "react-icons/ai";
@@ -11,6 +11,8 @@ import Waveform from "./Waveform";
 import COMMENT from "../components/COMMENT";
 import TAG from "../components/TAG";
 import { FileData } from "../Models/File";
+import { CT } from "../Models/CT";
+import axios from "axios";
 // import Waveform from "./Waveform";
 
 // const tracks = [
@@ -52,6 +54,16 @@ const Audio: React.FC<AudioProps> = ({
   const [selectedTrack, setSelectedTrack] = useState(file.audioURL);
   const [commentPopOver, setCommentPopOver] = useState(false);
   const [tagPopOver, setTagPopOver] = useState(false);
+  const [maxlength, setMaxlength] = useState(0);
+  const [ctdata, setCTData] = useState<CT[]>([]);
+
+  useEffect(() => {
+    axios.post("http://localhost:5000/project/getAllCTT", {
+      projectId: file._id,
+    }).then((res: any) => {
+      setCTData(res.data);
+    })
+  }, [])
 
   return (
     <IonPage className="container1 waveform">
@@ -64,7 +76,7 @@ const Audio: React.FC<AudioProps> = ({
       />
       <div className="waveform-container">
         <div className="main ">
-          <Waveform url={selectedTrack} />
+          <Waveform url={selectedTrack} setMaxLength={setMaxlength} />
           {/* <PlayList
             tracks={tracks}
             selectedTrack={selectedTrack}
@@ -83,6 +95,8 @@ const Audio: React.FC<AudioProps> = ({
                 loginfunction={loginfunction}
                 setTagPopOver={setTagPopOver}
                 tagPopOver={tagPopOver}
+                maxLength={maxlength}
+                file={file}
               />
             </div>
             <div>
@@ -111,6 +125,7 @@ const Audio: React.FC<AudioProps> = ({
                 loginfunction={loginfunction}
                 setCommentPopOver={setCommentPopOver}
                 commentPopOver={commentPopOver}
+                file={file}
               />
             </div>
             <div>
