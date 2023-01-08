@@ -106,6 +106,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
                   }}
                   required
                   placeholder=" "
+                  autoComplete="localhost:404"
                 />
                 <label htmlFor="email">Email Address</label>
               </div>
