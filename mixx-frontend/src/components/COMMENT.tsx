@@ -36,13 +36,15 @@ interface COMMENTProps {
   setCommentPopOver: (value: boolean) => void;
   commentPopOver: boolean;
   file: FileData;
+  getData: () => void;
 }
 const COMMENT: React.FC<COMMENTProps> = ({
   loginMetadata,
   loginfunction,
   setCommentPopOver,
   commentPopOver,
-  file
+  file,
+  getData
 }) => {
   var videoUrl: string;
   var start_time: number;
@@ -65,6 +67,7 @@ const COMMENT: React.FC<COMMENTProps> = ({
           timeStampEnd: end_time,
           comment: videoUrl,
         }).then((res: any) => {
+          getData();
           console.log(res);
         })
         setCommentPopOver(false);
@@ -86,7 +89,7 @@ const COMMENT: React.FC<COMMENTProps> = ({
             <IonRow class="urlInputWrapper">
               <IonInput
                 required={true}
-                placeholder="Enter tag"
+                placeholder="Enter comment"
                 class="urlInput"
                 value={videoUrl}
                 onIonChange={(e) => {
