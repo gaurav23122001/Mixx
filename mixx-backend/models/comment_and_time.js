@@ -11,7 +11,11 @@ const comment_and_time_schema = new mongoose.Schema({
       },
       comment: {
             type: String,
-            required: true
+            required: false
+      },
+      tags: {
+            type: String,
+            required: false
       }
 });
 

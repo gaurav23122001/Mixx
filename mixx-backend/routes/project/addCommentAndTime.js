@@ -2,10 +2,10 @@ const express = require('express');
 const Project = require('../../models/project');
 const CommentAndTime = require('../../models/comment_and_time');
 
-const commentAndTimeRouter = express.Router();
+const CTTRouter = express.Router();
 
-commentAndTimeRouter.post('/addCommentAndTime', async (req, res) => {
-      const { projectId, comment, time } = req.body;
+CTTRouter.post('/addCTT', async (req, res) => {
+      const { projectId, comment, timeStamp, tags } = req.body;
       try {
             const project = await Project
                   .findOne({
@@ -14,13 +14,14 @@ commentAndTimeRouter.post('/addCommentAndTime', async (req, res) => {
             if (project) {
                   const commentAndTime = new CommentAndTime({
                         comment: comment,
-                        timeStamp: time,
-                        projectId: projectId
+                        timeStamp: timeStamp,
+                        projectId: projectId,
+                        tags: tags
                   });
                   await commentAndTime.save();
                   project.timeStampAndComment.push(commentAndTime);
                   await project.save();
-                  res.status(200).send("Comment and Time Added");
+                  res.status(200).send(commentAndTime);
             }
             else {
                   res.status(404).send({ error: "Project Not Found" });
@@ -32,19 +33,21 @@ commentAndTimeRouter.post('/addCommentAndTime', async (req, res) => {
       }
 });
 
-commentAndTimeRouter.post('/deleteCommentAndTime', async(req, res) => {
+CTTRouter.post('/deleteCTT', async (req, res) => {
       const { commentAndTimeId } = req.body;
       const commentAndTimeVar = await CommentAndTime.findOne({ _id: commentAndTimeId }).exec();
       console.log(commentAndTimeVar);
       if (commentAndTimeVar) {
+            console.log("hy")
             const projectId = commentAndTimeVar.projectId;
             const project = Project
                   .findOne({
                         _id: projectId
                   }).exec();
             if (project) {
+                  console.log("came here to delete from array");
                   console.log(projectId);
-                  Project.updateOne({ _id: projectId }, { $pull: { timeStampAndComment: commentAndTimeId } }).exec();
+                  Project.updateOne({ _id: projectId }, { $pull: { timeStampAndComment: commentAndTimeVar } }).exec();
             }
       }
 
@@ -63,4 +66,4 @@ commentAndTimeRouter.post('/deleteCommentAndTime', async(req, res) => {
 })
 
 
-module.exports = commentAndTimeRouter;
+module.exports = CTTRouter;
