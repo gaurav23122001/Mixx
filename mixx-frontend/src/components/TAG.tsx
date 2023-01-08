@@ -37,6 +37,7 @@ interface TAGProps {
   tagPopOver: boolean;
   maxLength: number;
   file: FileData;
+  getData: () => void;
 }
 const URL: React.FC<TAGProps> = ({
   loginMetadata,
@@ -45,6 +46,7 @@ const URL: React.FC<TAGProps> = ({
   tagPopOver,
   maxLength,
   file,
+  getData
 }) => {
   // const [videoUrl, setVideoUrl] = useState<string>("");
   var videoUrl: string;
@@ -69,6 +71,7 @@ const URL: React.FC<TAGProps> = ({
           timeStampEnd: end_time,
           tags: videoUrl,
         }).then((res: any) => {
+          getData();
           console.log(res);
         })
         setTagPopOver(false);

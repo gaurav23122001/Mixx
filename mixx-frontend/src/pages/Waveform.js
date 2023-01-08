@@ -34,7 +34,7 @@ const formWaveSurferOptions = (ref) => ({
   ],
 });
 
-export default function Waveform({ url, setMaxLength }) {
+export default function Waveform({ url, setMaxLength, setCurrent }) {
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
   const [playing, setPlay] = useState(false);
@@ -68,7 +68,7 @@ export default function Waveform({ url, setMaxLength }) {
 
   useEffect(() => {
     const timeOut = setInterval(() => {
-      console.log(wavesurfer.current.getCurrentTime());
+      setCurrent(wavesurfer.current.getCurrentTime());
     }, 1000);
     // const timeOut = setTimeout(wavesurfer.current.getCurrentTime(), 1000);
     // // console.log(timeOut)
@@ -81,10 +81,7 @@ export default function Waveform({ url, setMaxLength }) {
   //   timer = setInterval(function () {
   //     getCurrentTime();
   //   }, 1000);
-  // }
-  const getCurrentTime = () => {
-    return wavesurfer.current.getCurrentTime();
-  }
+  // 
   const handlePlayPause = () => {
     setPlay(!playing);
     wavesurfer.current.playPause();
