@@ -47,7 +47,7 @@ export default function Waveform({ url }) {
 
     const options = formWaveSurferOptions(waveformRef.current);
     wavesurfer.current = WaveSurfer.create(options);
-
+    // const newUrl = 'https://crossorigin.me/'+url;
     wavesurfer.current.load(url);
 
     wavesurfer.current.on("ready", function () {

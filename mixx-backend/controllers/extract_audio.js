@@ -1,5 +1,4 @@
 const ffmpeg = require("fluent-ffmpeg");
-const avd = require("all-video-downloader");
 const fs = require('fs');
 const request = require('request');
 const getRandomId = require("../utils/file_id");

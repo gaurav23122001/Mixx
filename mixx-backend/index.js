@@ -32,8 +32,9 @@ io.on('connection', (socket) => {
 const authRouter = require('./routes/auth.js');
 const projectRouter = require('./routes/project/createProject.js');
 const { deleteProjectRouter } = require('./routes/project/deleteProject');
-const commentAndTimeRouter = require('./routes/project/addCommentAndTime');
+const CTTRouter = require('./routes/project/addCommentAndTime');
 const getAllProjectsRouter = require('./routes/project/getAllProjects');
+const getAllCTTRouter = require('./routes/project/getAllCTT');
 
 app.use(cors({
     origin: '*',
@@ -123,8 +124,9 @@ app.post('/upload-file', upload, async (req, res) => {
 app.use('/auth', authRouter);
 app.use('/project', projectRouter);
 app.use('/project', deleteProjectRouter);
-app.use('/project', commentAndTimeRouter)
+app.use('/project', CTTRouter)
 app.use('/project', getAllProjectsRouter)
+app.use('/project', getAllCTTRouter)
 
 
 if (process.env.NODE_ENV === 'development') {

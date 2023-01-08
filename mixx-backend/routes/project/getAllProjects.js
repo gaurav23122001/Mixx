@@ -11,7 +11,6 @@ getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
       await User.findOne({ _id: userId })
             .then(async user => {
                   console.log(user);
-                  // console.log(projects);
                   console.log(userId);
                   let allUserProject = [];
                   let projectCount = 0;
@@ -23,25 +22,28 @@ getAllProjectsRouter.post('/getAllProjects', async (req, res) => {
                         await Project.findOne({
                               _id: project
                         }).then(projectObj => {
-                              let currentTime = new Date().getTime();
-                              let timeDifference = currentTime - projectObj.creationTime;
-                              let timeDifferenceInMinutes = Math.floor((timeDifference / 60000) / (60 * 24));
-                              let newProjectObj = {
-                                    "_id": projectObj._id,
-                                    "name": projectObj.name,
-                                    "description": projectObj.description,
-                                    "audioURL": projectObj.audioURL,
-                                    "audioFormat": projectObj.audioFormat,
-                                    "timeStampAndComment": projectObj.timeStampAndComment,
-                                    "user": projectObj.user,
-                                    "creationTime": projectObj.creationTime,
-                                    "__v": projectObj.__v,
-                                    "timeDiffDays": timeDifferenceInMinutes
+                              console.log(projectObj);
+                              if (projectObj) {
+
+                                    let currentTime = new Date().getTime();
+                                    let timeDifference = currentTime - projectObj.creationTime;
+                                    let timeDifferenceInMinutes = Math.floor((timeDifference / 60000) / (60 * 24));
+                                    let newProjectObj = {
+                                          "_id": projectObj._id,
+                                          "name": projectObj.name,
+                                          "description": projectObj.description,
+                                          "audioURL": projectObj.audioURL,
+                                          "audioFormat": projectObj.audioFormat,
+                                          "timeStampAndComment": projectObj.timeStampAndComment,
+                                          "user": projectObj.user,
+                                          "creationTime": projectObj.creationTime,
+                                          "__v": projectObj.__v,
+                                          "timeDiffDays": timeDifferenceInMinutes
+                                    }
+                                    allUserProject.push(newProjectObj);
                               }
-                              allUserProject.push(newProjectObj);
                               projectCount++;
                               if (projectCount === user.savedProjects.length) {
-                                    console.log(newProjectObj);
                                     // console.log(timeDifferenceInMinutes);
                                     allUserProject.sort((b, a) => {
                                           return b.timeDiffDays - a.timeDiffDays;

@@ -19,7 +19,6 @@ projectRouter.post('/create', async (req, res) => {
       await newProject.save()
             .then(async (project) => {
                   await User.findOne({ _id: userId }).then(user => {
-                        // console.log(user);
                         user.savedProjects.push(project);
                         user.save();
                   })
