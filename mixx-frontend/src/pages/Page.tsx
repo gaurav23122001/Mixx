@@ -50,6 +50,19 @@ const Page: React.FC<PageProps> = ({ loginfunction, loginMetadata }) => {
         loginMetadata={loginMetadata}
       />
     );
+  } else if (name === "contact") {
+    return (
+      <Contact
+        menu={menu}
+        setMenu={setMenu}
+        screen={screen}
+        setScreen={setScreen}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        loginfunction={loginfunction}
+        loginMetadata={loginMetadata}
+      />
+    );
   }
 
   return <Redirect to="/home" />;

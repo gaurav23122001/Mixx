@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Menu from '../components/Menu';
 import { LoginMetadata } from '../Models/LoginMetadata';
 import menuImg from '../Assets/hamburger.svg'
+import './ContactUs.css';
 
 interface ContactProps {
     loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -28,22 +29,37 @@ const Contact: React.FC<ContactProps> = ({
     })
 
     return (
-        <div className="container1">
-            {screen ?
-                <Menu setMenu={setMenu} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginMetadata={loginMetadata} loginfunction={loginfunction} />
-                :
-                menu ?
-                    null
-                    :
-                    <img onClick={() => { setMenu(true); setSidebarOpen(true) }} className="menu" src={menuImg} alt='' />
-            }
-            {menu ?
-                <Menu setMenu={setMenu} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} loginMetadata={loginMetadata} loginfunction={loginfunction} />
-                :
-                null
-            }
-            <div className="main">sdasdasdasdasdasdasdasdsa</div>
-        </div>
+      <div className="container1">
+        {screen ? (
+          <Menu
+            setMenu={setMenu}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+            loginMetadata={loginMetadata}
+            loginfunction={loginfunction}
+          />
+        ) : menu ? null : (
+          <img
+            onClick={() => {
+              setMenu(true);
+              setSidebarOpen(true);
+            }}
+            className="menu"
+            src={menuImg}
+            alt=""
+          />
+        )}
+        {menu ? (
+          <Menu
+            setMenu={setMenu}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+            loginMetadata={loginMetadata}
+            loginfunction={loginfunction}
+          />
+        ) : null}
+        <div className="main"></div>
+      </div>
     );
 };
 

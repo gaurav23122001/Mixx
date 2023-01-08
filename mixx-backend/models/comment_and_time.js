@@ -5,7 +5,11 @@ const comment_and_time_schema = new mongoose.Schema({
             type: String,
             required: true
       },
-      timeStamp: {
+      timeStampStart: {
+            type: Number,
+            required: true
+      },
+      timeStampEnd: {
             type: Number,
             required: true
       },
