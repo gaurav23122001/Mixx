@@ -11,7 +11,6 @@ getAllCTT.post('/getAllCTT', async (req, res) => {
       await Project.findOne({ _id: projectId })
             .then(async project => {
                   console.log(project);
-                  // console.log(projects);
                   console.log(projectId);
                   let allCTT = [];
                   let CTTCount = 0;

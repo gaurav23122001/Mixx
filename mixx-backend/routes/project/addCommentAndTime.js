@@ -5,7 +5,7 @@ const CommentAndTime = require('../../models/comment_and_time');
 const CTTRouter = express.Router();
 
 CTTRouter.post('/addCTT', async (req, res) => {
-      const { projectId, comment, timeStamp, tags } = req.body;
+      const { projectId, comment, timeStampStart, timeStampEnd, tags } = req.body;
       try {
             const project = await Project
                   .findOne({
@@ -14,7 +14,8 @@ CTTRouter.post('/addCTT', async (req, res) => {
             if (project) {
                   const commentAndTime = new CommentAndTime({
                         comment: comment,
-                        timeStamp: timeStamp,
+                        timeStampStart: timeStampStart,
+                        timeStampEnd: timeStampEnd,
                         projectId: projectId,
                         tags: tags
                   });

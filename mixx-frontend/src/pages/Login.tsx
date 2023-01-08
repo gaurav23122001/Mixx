@@ -98,6 +98,7 @@ const Login: React.FC<LoginProps> = ({ loginfunction, loginMetadata }) => {
             >
               <div className="inputBox">
                 <input
+                  autoComplete="off"
                   type="email"
                   id="email"
                   name="email"
