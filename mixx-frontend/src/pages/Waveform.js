@@ -3,6 +3,7 @@ import "./Waveform.css";
 import WaveSurfer from "wavesurfer.js";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { BsFillStopCircleFill } from "react-icons/bs";
+import { BiDownArrowAlt } from "react-icons/bi";
 import TimelinePlugin from "wavesurfer.js/src/plugin/timeline/index.js";
 
 const formWaveSurferOptions = (ref) => ({
@@ -85,7 +86,10 @@ export default function Waveform({ url }) {
 
   return (
     <div>
-      <div id="waveform" ref={waveformRef} />
+      <div className="download-button">
+        <BiDownArrowAlt size="2em" />
+      </div>
+      <div id="waveform" ref={waveformRef}></div>
       <div id="waveform-timeline"></div>
       <div className="controls">
         <div onClick={handlePlayPause}>
