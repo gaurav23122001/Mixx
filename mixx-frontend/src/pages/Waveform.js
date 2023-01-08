@@ -93,7 +93,7 @@ export default function Waveform({ url }) {
       <div id="waveform-timeline"></div>
       <div className="controls">
         <div onClick={handlePlayPause}>
-          {playing ? <FaPlay size="1.5em" /> : <FaPause size="1.5em" />}
+          {!playing ? <FaPlay size="1.5em" /> : <FaPause size="1.5em" />}
         </div>
         <div onClick={handleStop} style={{ marginLeft: "10px" }}>
           <BsFillStopCircleFill size="1.5em" />
