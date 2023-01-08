@@ -123,7 +123,7 @@ const Files: React.FC<FilesProps> = ({
   }
   return (
     <IonPage className="container1 filePage">
-      <IonContent className="filePageContent">
+      <IonContent scrollY={true} className="filePageContent scrollFix">
         <Menu
           setMenu={setMenu}
           sidebarOpen={sidebarOpen}

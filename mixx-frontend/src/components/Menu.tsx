@@ -57,55 +57,55 @@ const Menu: React.FC<MenuProps> = ({
         <img src={sideimg} alt="" width={100} />
       </div>
       <nav className={sidebarOpen ? "sidebar sidebar-open" : "sidebar"}>
-        <IonRow class="topWrapper">
-          <IonRow class="navTop">
-            <IonCol size="8" class="avatarImgWrapper">
-              <img
-                className={sidebarOpen ? "avatar-open" : "avatar-close"}
-                src={avatar}
-                alt=""
-              />
-              {sidebarOpen && <div className="username">{loginMetadata.name}</div>}
-            </IonCol>
-            <IonCol
-              class="arrowWrapper"
-              size={sidebarOpen ? "2" : "3"}
-              onClick={() => {
-                setSidebarOpen(!sidebarOpen);
-                setMenu(false);
-              }}
-            >
-              {sidebarOpen ? (
-                <MdKeyboardArrowLeft size="1.5em" />
-              ) : (
-                <MdOutlineKeyboardArrowRight size="1.5em" />
-              )}
-            </IonCol>
-          </IonRow>
-          <IonRow class="navMiddle">
-            <Link
-              to="/home"
-              className={sidebarOpen ? "menuLink menuLink-open" : "menuLink"}
-            >
-              <div className={active === "home" ? "active" : ""}>
-                <span className="icon">
-                  <AiFillHome size="1.2em" />
-                </span>
-                {sidebarOpen ? <span className="nav-title">Home</span> : null}
-              </div>
-            </Link>
-            <Link
-              to="/files"
-              className={sidebarOpen ? "menuLink menuLink-open" : "menuLink"}
-            >
-              <div className={active === "files" ? "active" : ""}>
-                <span className="icon">
-                  <SiFiles size="1.2em" />
-                </span>
-                {sidebarOpen ? <span className="nav-title">Files</span> : null}
-              </div>
-            </Link>
-            <Link
+        {/* <IonRow class="topWrapper"> */}
+        <IonRow class="navTop">
+          <IonCol size="8" class="avatarImgWrapper">
+            <img
+              className={sidebarOpen ? "avatar-open" : "avatar-close"}
+              src={avatar}
+              alt=""
+            />
+            {sidebarOpen && <div className="username">{loginMetadata.name}</div>}
+          </IonCol>
+          <IonCol
+            class="arrowWrapper"
+            size={sidebarOpen ? "2" : "3"}
+            onClick={() => {
+              setSidebarOpen(!sidebarOpen);
+              setMenu(false);
+            }}
+          >
+            {sidebarOpen ? (
+              <MdKeyboardArrowLeft size="1.5em" />
+            ) : (
+              <MdOutlineKeyboardArrowRight size="1.5em" />
+            )}
+          </IonCol>
+        </IonRow>
+        <IonRow class="navMiddle">
+          <Link
+            to="/home"
+            className={sidebarOpen ? "menuLink menuLink-open" : "menuLink"}
+          >
+            <div className={active === "home" ? "active" : ""}>
+              <span className="icon">
+                <AiFillHome size="1.2em" />
+              </span>
+              {sidebarOpen ? <span className="nav-title">Home</span> : null}
+            </div>
+          </Link>
+          <Link
+            to="/files"
+            className={sidebarOpen ? "menuLink menuLink-open" : "menuLink"}
+          >
+            <div className={active === "files" ? "active" : ""}>
+              <span className="icon">
+                <SiFiles size="1.2em" />
+              </span>
+              {sidebarOpen ? <span className="nav-title">Files</span> : null}
+            </div>
+          </Link>
+          {/* <Link
               to="/about"
               className={sidebarOpen ? "menuLink menuLink-open" : "menuLink"}
             >
@@ -128,9 +128,9 @@ const Menu: React.FC<MenuProps> = ({
                   <span className="nav-title">Contact</span>
                 ) : null}
               </div>
-            </Link>
-          </IonRow>
+            </Link> */}
         </IonRow>
+        {/* </IonRow> */}
         <IonRow class="navBottom">
           {/* <GoogleLogout
           clientId={clientId}
