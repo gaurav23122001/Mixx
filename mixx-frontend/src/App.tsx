@@ -76,21 +76,23 @@ const App: React.FC = () => {
                 loginMetadata={loginMetadata}
               />
             </Route>
-            {/* <Route path="/:name/:name1" exact={true}>
-              <Redirect to="/home" />
-            </Route> */}
+            <Route path="/:name/:name1" exact={true}>
+              <Redirect to="/files" />
+            </Route>
           </IonRouterOutlet>
           {/* </IonSplitPane> */}
         </IonReactRouter>
+
+
       ) : (
         <IonReactRouter>
           <IonRouterOutlet id="main">
-            {/* <Route path="/" exact={true}>
+            <Route path="/" exact={false}>
               <Redirect to="/login" />
             </Route>
-            <Route path="/:page" exact={true}>
-              <Redirect to="/login" />
-            </Route> */}
+            {/* <Route path="/:page" exact={true}>
+            <Redirect to="/login" />
+          </Route> */}
             <Route path="/login" exact={true}>
               {/* <Redirect to="/login" /> */}
               <Login

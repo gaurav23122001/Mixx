@@ -38,7 +38,7 @@ const Menu: React.FC<MenuProps> = ({
   const logOut = () => {
     loginfunction(new LoginMetadata("-1"));
     StorageService.Logout();
-    // window.location.reload();
+    window.location.reload();
   };
 
   // const [sidebarOpen, setSidebarOpen] = useState(false);

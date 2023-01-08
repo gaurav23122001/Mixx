@@ -17,6 +17,7 @@ import { AiOutlineCloudDownload } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
 import axios from "axios";
 import { FileData } from "../Models/File";
+import Play from "./Play";
 
 interface FilesProps {
   loginfunction: (loginMetadata: LoginMetadata | null) => void;
@@ -42,6 +43,8 @@ const Files: React.FC<FilesProps> = ({
   const [searchText, setSearchText] = useState("");
   const [files, setFiles] = useState<FileData[]>([]);
   const [loading, isLoading] = useState(false);
+  const [convert, setConvert] = useState(false);
+  const [file, setFile] = useState<FileData>();
   useEffect(() => {
     document.title = "Files - Mixx";
     getData();
@@ -102,6 +105,22 @@ const Files: React.FC<FilesProps> = ({
         // alert(err.response.data.error);
       });
   };
+
+  if (convert) {
+    return (
+      <Play
+        menu={menu}
+        setMenu={setMenu}
+        screen={screen}
+        setScreen={setScreen}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        loginfunction={loginfunction}
+        loginMetadata={loginMetadata}
+        file={file}
+      />
+    );
+  }
   return (
     <IonPage className="container1 filePage">
       <IonContent className="filePageContent">
@@ -141,11 +160,13 @@ const Files: React.FC<FilesProps> = ({
           </IonCard>
         </IonRow>
         <IonRow class="searchbarBorder">
-          <IonCard class="fileTop fileDetails">
+          <IonCard class={!files.length ? "fileTop fileDetails noFile" : "fileTop fileDetails"}>
             <IonCardContent>
               <IonGrid style={{ color: "white", opacity: "0.5" }}>
                 {loading ? (
                   <IonSpinner name="crescent" class="spinLoad" />
+                ) : !files.length ? (
+                  <div className="noproject">Get Started With First Project</div>
                 ) : null}
                 {files.map((file: FileData) => {
                   if (
@@ -154,7 +175,10 @@ const Files: React.FC<FilesProps> = ({
                   )
                     return (
                       <IonRow class="fileValue">
-                        <IonCol size="6" class="ion-text-start">
+                        <IonCol size="6" class="ion-text-start" onClick={() => {
+                          setFile(file)
+                          setConvert(true)
+                        }}>
                           &nbsp;&nbsp;&nbsp;{file.name}
                         </IonCol>
                         <IonCol size="2" class="ion-text-center">
@@ -196,9 +220,6 @@ const Files: React.FC<FilesProps> = ({
               </IonGrid>
             </IonCardContent>
           </IonCard>
-          {!files.length && (
-            <div className="noproject">Get Start With First Project</div>
-          )}
         </IonRow>
       </IonContent>
     </IonPage>
