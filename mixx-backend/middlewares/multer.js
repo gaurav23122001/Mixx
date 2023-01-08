@@ -3,7 +3,7 @@ const path = require('path');
 const getRandomId = require('../utils/file_id');
 
 const storage = multer.diskStorage({
-    destination: '/home/ravan/Desktop/Codes/Mixx/mixx-backend/uploads/',
+    destination: 'D:/iit guwahati project/mixx-backend/uploads/',
     filename: (req, file, callback) => {
         callback(null,
             file.originalname.split('.')[0] + '_' + getRandomId() + '.' + file.originalname.split('.')[1]

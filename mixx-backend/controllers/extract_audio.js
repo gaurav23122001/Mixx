@@ -8,8 +8,8 @@ const io = require('socket.io')({
     }
 });
 
-const Upload_Directory_path = '/home/ravan/Desktop/Codes/Mixx/mixx-backend/uploads/';
-const Output_Directory_path = '/home/ravan/Desktop/Codes/Mixx/mixx-backend/outputs/';
+const Upload_Directory_path = 'D:/iit guwahati project/mixx-backend/uploads/';
+const Output_Directory_path = 'D:/iit guwahati project/mixx-backend/outputs/';
 
 
 const extractAudioFromFile = (fileName, audioFormat) => {
