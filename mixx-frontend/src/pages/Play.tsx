@@ -135,7 +135,7 @@ const Audio: React.FC<AudioProps> = ({
 
             })}
             {/* <div className="info"></div> */}
-            <div className="view-button">View All</div>
+            {/* <div className="view-button">View All</div> */}
           </div>
           <div className="comments">
             <div className="header">
@@ -179,7 +179,7 @@ const Audio: React.FC<AudioProps> = ({
               }
 
             })}
-            <div className="view-button">View All</div>
+            {/* <div className="view-button">View All</div> */}
 
           </div>
         </div>
